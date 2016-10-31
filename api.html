@@ -68,27 +68,25 @@ with more precession.</p>
 </dl>
 <p class="rubric">Notes</p>
 <p>Each Opentrons protocol is a Python script which when evaluated creates
-an execution plan which stored as a list of commands in 
+an execution plan which stored as a list of commands in
 Robot&#8217;s command queue.</p>
 <p>First you write the protocol in Python then you <code class="xref py py-func docutils literal"><span class="pre">simulate()</span></code>
 it against a virtual robot or <a class="reference internal" href="#opentrons.Robot.run" title="opentrons.Robot.run"><code class="xref py py-func docutils literal"><span class="pre">run()</span></code></a> it on a real robot.</p>
 <p>Using a Python script and the Opentrons API load your containers and
-instruments (see <code class="xref py py-class docutils literal"><span class="pre">Pipette</span></code>). Then write your instructions which 
+instruments (see <code class="xref py py-class docutils literal"><span class="pre">Pipette</span></code>). Then write your instructions which
 will get converted into an execution plan.</p>
 <p>Example protocol:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
 <p>After commands have been enqueued, you can <code class="xref py py-func docutils literal"><span class="pre">simulate()</span></code>
 or <a class="reference internal" href="#opentrons.Robot.run" title="opentrons.Robot.run"><code class="xref py py-func docutils literal"><span class="pre">run()</span></code></a> on a robot.</p>
 <p>See <code class="xref py py-class docutils literal"><span class="pre">Pipette</span></code> for the list of supported instructions.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.instruments.pipette</span> <span class="k">import</span> <span class="n">Pipette</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.instruments.pipette</span> <span class="k">import</span> <span class="n">Pipette</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plate</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">add_container</span><span class="p">(</span><span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="s1">&#39;96-flat&#39;</span><span class="p">,</span> <span class="s1">&#39;plate&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">commands</span><span class="p">()</span>
 <span class="go">[&#39;Aspirating 200uL at &lt;Deck&gt;/&lt;Slot A1&gt;/&lt;Container plate&gt;/&lt;Well A1&gt;&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
@@ -507,7 +505,9 @@ error and it is recommended to home it. In this scenario, add
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;Virtual Smoothie&#39;</span><span class="p">)</span>
+<span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -547,6 +547,8 @@ avoiding obstacles.</p>
 </table>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span> 
+<span class="go">&lt;opentrons.robot.robot.Robot object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;Virtual Smoothie&#39;</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
@@ -595,6 +597,8 @@ it will execute similar to <code class="xref py py-func docutils literal"><span 
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.instruments.pipette</span> <span class="k">import</span> <span class="n">Pipette</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span> 
+<span class="go">&lt;opentrons.robot.robot.Robot object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;Virtual Smoothie&#39;</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
