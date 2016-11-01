@@ -50,25 +50,29 @@
 </div>
 <div class="section" id="hello-world">
 <h2>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
+<p>Below is a short protocol that will pick up a tip and use it to move 100ul volume across all the wells on a plate:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># First, import opentrons API modules</span>
+<span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
 <span class="kn">from</span> <span class="nn">opentrons</span> <span class="k">import</span> <span class="n">containers</span><span class="p">,</span> <span class="n">instruments</span>
 
-<span class="n">robot</span> <span class="o">=</span> <span class="n">Rodbot</span><span class="p">()</span>
+<span class="c1"># Initialized Robot variable</span>
+<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span>
 
+<span class="c1"># Load a tip rack and assign it to a variable</span>
 <span class="n">tiprack</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
     <span class="s1">&#39;tiprack-200ul&#39;</span><span class="p">,</span>  <span class="c1"># container type</span>
     <span class="s1">&#39;A1&#39;</span><span class="p">,</span>             <span class="c1"># slot</span>
     <span class="s1">&#39;tiprack&#39;</span>         <span class="c1"># user-defined name</span>
 <span class="p">)</span>
+<span class="c1"># Load a plate</span>
 <span class="n">plate</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;96-flat&#39;</span><span class="p">,</span> <span class="s1">&#39;B1&#39;</span><span class="p">,</span> <span class="s1">&#39;plate&#39;</span><span class="p">)</span>
 
+<span class="c1"># Initialize a pipette</span>
 <span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span>
     <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;b&quot;</span>
 <span class="p">)</span>
 
 <span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>  <span class="c1"># volume calibration, can be called whenever you want</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>             <span class="c1"># clear robot&#39;s state first</span>
-
 <span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># pick up tip from position 0 in a tip rack</span>
 
 <span class="c1"># loop through 95 wells, transferring to the next</span>
@@ -76,7 +80,12 @@
     <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">blow_out</span><span class="p">()</span><span class="o">.</span><span class="n">touch_tip</span><span class="p">()</span>
 
-<span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1"># return tip to back to position 0 in a tip rack</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">return_tip</span><span class="p">()</span>
+<span class="c1"># simulate a protocol run on a virtual robot</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+<span class="c1"># robot.connect(&#39;/dev/tty.usbserialNNNN&#39;)  # connect to the robot</span>
+<span class="c1"># robot.run()                              # to run on a physical robot</span>
 </pre></div>
 </div>
 </div>
@@ -107,12 +116,34 @@ For example:</p>
 </div>
 <p>will aspirate 100, from the bottom of a well.</p>
 </div>
-<div class="section" id="api-reference">
-<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-opentrons-api">
+<h2>Installing Opentrons API<a class="headerlink" href="#installing-opentrons-api" title="Permalink to this headline">¶</a></h2>
+<p>If you are just starting with Python it is recommended to install Jupyter notebook to run Opentrons API. Please refer to <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Running Opentrons API in Jupyter</span></a> for detailed instructions.</p>
+<p>If you are familiar with python and comfortable running <code class="docutils literal"><span class="pre">pip</span></code>, you can install Opentrons API by running:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install opentrons
+</pre></div>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Developer Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#main-interface">Main Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#robot">Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#protocol-commands">Protocol Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Opentrons API Tips and Tricks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks.html#advanced-use-cases">Advanced Use Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Running Opentrons API in Jupyter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#install-anaconda-and-python-3">Install Anaconda and Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#install-jupyter">Install Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#launch-jupyter-notebook-app">Launch Jupyter Notebook App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#programming-in-jupyter-notebook-hello-world">Programming in Jupyter Notebook: Hello World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#install-opentrons-api">Install Opentrons API</a></li>
 </ul>
 </li>
 </ul>
@@ -140,7 +171,8 @@ For example:</p>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#hello-world">Hello World</a></li>
 <li><a class="reference internal" href="#basic-principles">Basic Principles</a></li>
-<li><a class="reference internal" href="#api-reference">API Reference</a></li>
+<li><a class="reference internal" href="#installing-opentrons-api">Installing Opentrons API</a></li>
+<li><a class="reference internal" href="#further-reading">Further Reading</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
