@@ -104,7 +104,7 @@ Home
 .. testcode:: main
 
   robot.home('xy', enqueue=True)
-  robot.run()
+  # robot.run()
 
 Aspirate then dispense in a single well
 ---------------------------------------
@@ -204,7 +204,7 @@ Distribute to entire plate
       p200.dispense(dispense_volume, plate[i]).touch_tip()
 
   p200.drop_tip(trash)
-  robot.run()
+  # robot.run()
 
 Serial Dilution
 ---------------
@@ -264,7 +264,7 @@ Plate Mapping
       # blow out the extra liquid, then save the tip
       p200.blow_out(trash).drop_tip(tiprack[source_well])
     
-  robot.run()
+  # robot.run()
 
 Precision pipetting within a well
 ---------------------------------
@@ -303,4 +303,4 @@ Precision pipetting within a well
 
   p200.drop_tip(tiprack[3])
 
-  robot.run()
+  # robot.run()
