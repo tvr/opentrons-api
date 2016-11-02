@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Opentrons API: the ultimate way to design and run protocols &#8212; Opentrons API 2.0 documentation</title>
+    <title>Opentrons API: Simple Biology Lab Protocol Coding &#8212; Opentrons API 2.0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -42,11 +42,22 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="opentrons-api-the-ultimate-way-to-design-and-run-protocols">
-<h1>Opentrons API: the ultimate way to design and run protocols<a class="headerlink" href="#opentrons-api-the-ultimate-way-to-design-and-run-protocols" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="opentrons-api-simple-biology-lab-protocol-coding">
+<h1>Opentrons API: Simple Biology Lab Protocol Coding<a class="headerlink" href="#opentrons-api-simple-biology-lab-protocol-coding" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>The Opentrons API is a versatile framework that makes it incredibly easy to write protocols and command the robot. Using the API your protocols can be understood by our machines and read or modified by fellow non-programmer scientists. It&#8217;s also an opportunity for you to learn a little bit of Python.</p>
+<p>The Opentrons API is a simple framework designed to make writing automated biology lab protocols easy.</p>
+<p>We&#8217;ve designed it in a way we hope is accessible to anyone with basic computer and wetlab skills. As a bench scientist, you can write your automated protocols in a similar way to how you&#8217;d already write them in your lab notebook.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pipette</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">tube_1</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">tube_2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That is how you tell the Opentrons robot to aspirate its full volume from tube-1 and dispense it into tube-2.</p>
+<p>To create your own automated protocols, you just have to string together commands for the robot to do for you. This one way to program the robot to use a p200 pipette to pick up 200ul (its full volume) and dispense 50ul into four different wells.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">trough</span><span class="p">)</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">well_1</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">well_2</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">well_3</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">well_4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you wanted to do this 96 times, you could write it like this:</p>
 </div>
 <div class="section" id="hello-world">
 <h2>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
@@ -167,7 +178,7 @@ For example:</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Opentrons API: the ultimate way to design and run protocols</a><ul>
+<li><a class="reference internal" href="#">Opentrons API: Simple Biology Lab Protocol Coding</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#hello-world">Hello World</a></li>
 <li><a class="reference internal" href="#basic-principles">Basic Principles</a></li>
