@@ -47,14 +47,17 @@
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>The Opentrons API is a simple framework designed to make writing automated biology lab protocols easy.</p>
-<p>We&#8217;ve designed it in a way we hope is accessible to anyone with basic computer and wetlab skills. As a bench scientist, you can write your automated protocols in a similar way to how you&#8217;d already write them in your lab notebook.</p>
+<p>We&#8217;ve designed it in a way we hope is accessible to anyone with basic computer and wetlab skills. As a bench scientist, you should be able to code your automated protocols in a way that reads like a lab notebook.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pipette</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">tube_1</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">tube_2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>That is how you tell the Opentrons robot to aspirate its full volume from tube-1 and dispense it into tube-2.</p>
-<p>To create your own automated protocols, you just have to string together commands for the robot to do for you. This one way to program the robot to use a p200 pipette to pick up 200ul (its full volume) and dispense 50ul into four different wells.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">trough</span><span class="p">)</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">well_1</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">well_2</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">well_3</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">well_4</span><span class="p">)</span>
+<p>That is how you tell the Opentrons robot to aspirate its the maximum volume of the current pipette from one tube and dispense it into another one.</p>
+<p>You string these commands into full protocols that anyone with Opentrons can run. This one way to program the robot to use a p200 pipette to pick up 200ul (its full volume) and dispense 50ul into the first four wells in a 96 well plate called &#8216;plate.&#8217;</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">trough</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>If you wanted to do this 96 times, you could write it like this:</p>
