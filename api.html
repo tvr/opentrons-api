@@ -87,12 +87,14 @@ into an execution plan.</li>
 <p>See <code class="xref py py-class docutils literal"><span class="pre">Pipette</span></code> for the list of supported instructions.</p>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons.instruments.pipette</span> <span class="k">import</span> <span class="n">Pipette</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons</span> <span class="k">import</span> <span class="n">instruments</span><span class="p">,</span> <span class="n">containers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span> 
 <span class="go">&lt;opentrons.robot.robot.Robot object at ...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plate</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">add_container</span><span class="p">(</span><span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="s1">&#39;96-flat&#39;</span><span class="p">,</span> <span class="s1">&#39;plate&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plate</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;96-flat&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="s1">&#39;plate&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> 
+<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
 <span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">commands</span><span class="p">()</span>

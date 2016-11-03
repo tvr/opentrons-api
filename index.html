@@ -60,7 +60,16 @@
 <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>If you wanted to do this 96 times, you could write it like this:</p>
+<p>If you wanted to do enough times to fill a 96 well plate, you could write it like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#define how much volume to dispense in each well</span>
+<span class="n">dispense_vol</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">96</span><span class="p">):</span>
+   <span class="k">if</span> <span class="n">p200</span><span class="o">.</span><span class="n">current_volume</span> <span class="o">&lt;</span> <span class="n">dispense_vol</span><span class="p">:</span>
+      <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">trough</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+   <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">dispense_vol</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="hello-world">
 <h2>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
