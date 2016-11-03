@@ -67,7 +67,7 @@
 <h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="simple-transfer">
 <h3>Simple Transfer<a class="headerlink" href="#simple-transfer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>        <span class="c1"># deletes all previously created commands</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>        <span class="c1"># deletes all previously created commands</span>
 
 <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>      <span class="c1"># add new commands to queue</span>
 <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -93,7 +93,7 @@
 </div>
 <div class="section" id="home">
 <h3>Home<a class="headerlink" href="#home" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
 
 <span class="c1"># these will be executed immediately</span>
 <span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>          <span class="c1"># by default homes Z first, then all other axis</span>
@@ -177,7 +177,7 @@
 <h2>Advanced Use Cases<a class="headerlink" href="#advanced-use-cases" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="distribute-to-entire-plate">
 <h3>Distribute to entire plate<a class="headerlink" href="#distribute-to-entire-plate" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
 
 <span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
 
@@ -189,7 +189,7 @@
     <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">dispense_volume</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">touch_tip</span><span class="p">()</span>
 
 <span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">trash</span><span class="p">)</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -232,7 +232,7 @@
     <span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
 <span class="p">}</span>
 
-<span class="n">robot</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">source_well</span><span class="p">,</span> <span class="n">ingredient</span> <span class="ow">in</span> <span class="n">sources</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="c1"># each ingredient has it&#39;s own tip</span>
@@ -247,13 +247,13 @@
     <span class="c1"># blow out the extra liquid, then save the tip</span>
     <span class="n">p200</span><span class="o">.</span><span class="n">blow_out</span><span class="p">(</span><span class="n">trash</span><span class="p">)</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="n">source_well</span><span class="p">])</span>
 
-<span class="n">robot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="precision-pipetting-within-a-well">
 <h3>Precision pipetting within a well<a class="headerlink" href="#precision-pipetting-within-a-well" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
 
 <span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
@@ -285,7 +285,7 @@
 
 <span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
-<span class="n">robot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
