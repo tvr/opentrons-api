@@ -134,27 +134,27 @@
 </div>
 <div class="section" id="mixing-at-a-well">
 <h3>Mixing at a well<a class="headerlink" href="#mixing-at-a-well" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>   <span class="c1"># arguments are (volume, repetitions, location)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>   <span class="c1"># arguments are (volume, location, repetitions)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="iterating-through-wells">
 <h3>Iterating through wells<a class="headerlink" href="#iterating-through-wells" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">96</span><span class="p">):</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">well</span> <span class="ow">in</span> <span class="n">plate</span><span class="p">:</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">well</span><span class="p">)</span>
+    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">well</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">plate</span><span class="o">.</span><span class="n">rows</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">well</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
-        <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">well</span><span class="p">)</span>
+        <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">well</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">well</span> <span class="ow">in</span> <span class="n">plate</span><span class="o">.</span><span class="n">cols</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]:</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">well</span><span class="p">)</span>
+    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">well</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -208,7 +208,7 @@
     <span class="c1"># (A1, A2), (A2, A3), (A3, A4), etc</span>
     <span class="k">for</span> <span class="n">well</span><span class="p">,</span> <span class="n">next_well</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">col</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
         <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">well</span><span class="p">)</span>
-        <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">next_well</span><span class="p">)</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">next_well</span><span class="p">)</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="n">repetitions</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
     <span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">trash</span><span class="p">)</span>
 </pre></div>
