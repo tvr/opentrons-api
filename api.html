@@ -92,9 +92,7 @@ into an execution plan.</li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span> 
 <span class="go">&lt;opentrons.robot.robot.Robot object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plate</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;96-flat&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="s1">&#39;plate&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> 
-<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
 <span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">commands</span><span class="p">()</span>
@@ -419,7 +417,7 @@ execution and throw an error if limit switch was hit.</td>
 <span id="pipette"></span><h2>Pipette<a class="headerlink" href="#module-opentrons.instruments" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="opentrons.instruments.Pipette">
-<em class="property">class </em><code class="descclassname">opentrons.instruments.</code><code class="descname">Pipette</code><span class="sig-paren">(</span><em>axis</em>, <em>name=None</em>, <em>channels=1</em>, <em>min_volume=0</em>, <em>trash_container=None</em>, <em>tip_racks=[]</em>, <em>aspirate_speed=300</em>, <em>dispense_speed=500</em><span class="sig-paren">)</span><a class="headerlink" href="#opentrons.instruments.Pipette" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">opentrons.instruments.</code><code class="descname">Pipette</code><span class="sig-paren">(</span><em>axis</em>, <em>name=None</em>, <em>channels=1</em>, <em>min_volume=0</em>, <em>max_volume=None</em>, <em>trash_container=None</em>, <em>tip_racks=[]</em>, <em>aspirate_speed=300</em>, <em>dispense_speed=500</em><span class="sig-paren">)</span><a class="headerlink" href="#opentrons.instruments.Pipette" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
 <dt>Through this class you can can:</dt>
 <dd><ul class="first last simple">
@@ -432,12 +430,12 @@ and <a class="reference internal" href="#opentrons.instruments.Pipette.return_ti
 </ul>
 </dd>
 <dt>Here are the typical steps of using the Pipette:</dt>
-<dd><ul class="first last simple">
-<li>Instantiate a pipette, attaching it to an axis (<cite>a</cite> or <cite>b</cite>)</li>
-<li>Set the maximum volume of this pipette (using <a class="reference internal" href="#opentrons.instruments.Pipette.set_max_volume" title="opentrons.instruments.Pipette.set_max_volume"><code class="xref py py-meth docutils literal"><span class="pre">set_max_volume()</span></code></a>)</li>
-<li>Design your protocol through the pipette&#8217;s liquid-handling commands</li>
-<li>Run on the <a class="reference internal" href="#opentrons.Robot" title="opentrons.Robot"><code class="xref any py py-class docutils literal"><span class="pre">Robot</span></code></a> using <a class="reference internal" href="#opentrons.Robot.run" title="opentrons.Robot.run"><code class="xref any py py-meth docutils literal"><span class="pre">run</span></code></a> or <a class="reference internal" href="#opentrons.Robot.simulate" title="opentrons.Robot.simulate"><code class="xref any py py-meth docutils literal"><span class="pre">simulate</span></code></a></li>
+<dd><ul class="first simple">
+<li>Instantiate a pipette with a maximum volume (uL)</li>
 </ul>
+<p class="last">and an axis (<cite>a</cite> or <cite>b</cite>)
+* Design your protocol through the pipette&#8217;s liquid-handling commands
+* Run on the <a class="reference internal" href="#opentrons.Robot" title="opentrons.Robot"><code class="xref any py py-class docutils literal"><span class="pre">Robot</span></code></a> using <a class="reference internal" href="#opentrons.Robot.run" title="opentrons.Robot.run"><code class="xref any py py-meth docutils literal"><span class="pre">run</span></code></a> or <a class="reference internal" href="#opentrons.Robot.simulate" title="opentrons.Robot.simulate"><code class="xref any py py-meth docutils literal"><span class="pre">simulate</span></code></a></p>
 </dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
@@ -449,6 +447,7 @@ and <a class="reference internal" href="#opentrons.instruments.Pipette.return_ti
 <li><strong>name</strong> (<em>str</em>) &#8211; Assigns the pipette a unique name for saving it&#8217;s calibrations</li>
 <li><strong>channels</strong> (<em>int</em>) &#8211; The number of channels on this pipette (Default: <cite>1</cite>)</li>
 <li><strong>min_volume</strong> (<em>int</em>) &#8211; The smallest recommended uL volume for this pipette (Default: <cite>0</cite>)</li>
+<li><strong>max_volume</strong> (<em>int</em>) &#8211; The largest uL volume for this pipette (Default: <cite>min_volume</cite> + 1)</li>
 <li><strong>trash_container</strong> (<em>Container</em>) &#8211; Sets the default location <a class="reference internal" href="#opentrons.instruments.Pipette.drop_tip" title="opentrons.instruments.Pipette.drop_tip"><code class="xref py py-meth docutils literal"><span class="pre">drop_tip()</span></code></a> will put tips
 (Default: <cite>None</cite>)</li>
 <li><strong>tip_racks</strong> (<em>list</em>) &#8211; A list of Containers for this Pipette to track tips when calling
@@ -470,13 +469,12 @@ and <a class="reference internal" href="#opentrons.instruments.Pipette.return_ti
 </table>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons</span> <span class="k">import</span> <span class="n">instruments</span><span class="p">,</span> <span class="n">containers</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p1000</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p1000</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> 
-<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1000</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">max_volume</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tip_rack_200ul</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;tiprack-200ul&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">tip_racks</span><span class="o">=</span><span class="p">[</span><span class="n">tip_rack_200ul</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> 
-<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">tip_racks</span><span class="o">=</span><span class="p">[</span><span class="n">tip_rack_200ul</span><span class="p">])</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -486,8 +484,7 @@ and <a class="reference internal" href="#opentrons.instruments.Pipette.return_ti
 <p class="rubric">Notes</p>
 <p>If no <cite>location</cite> is passed, the pipette will aspirate
 from it&#8217;s current position. If no <cite>volume</cite> is passed,
-<cite>aspirate</cite> will default to it&#8217;s <cite>max_volume</cite>
-(see <a class="reference internal" href="#opentrons.instruments.Pipette.set_max_volume" title="opentrons.instruments.Pipette.set_max_volume"><code class="xref any py py-meth docutils literal"><span class="pre">set_max_volume</span></code></a>)</p>
+<cite>aspirate</cite> will default to it&#8217;s <cite>max_volume</cite></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -515,9 +512,7 @@ method will skip the command queue and execute immediately</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> 
-<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># aspirate 50uL from a Well</span>
@@ -575,9 +570,7 @@ method will skip the command queue and execute immediately</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> 
-<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">()</span><span class="o">.</span><span class="n">blow_out</span><span class="p">()</span> 
 <span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
 </pre></div>
@@ -710,9 +703,7 @@ method will skip the command queue and execute immediately</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> 
-<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># fill the pipette with liquid (200uL)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
 <span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
@@ -858,9 +849,7 @@ method will skip the command queue and execute immediately</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> 
-<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># mix 50uL in a Well, three times</span>
@@ -999,23 +988,6 @@ method will skip the command queue and execute immediately</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="opentrons.instruments.Pipette.set_max_volume">
-<code class="descname">set_max_volume</code><span class="sig-paren">(</span><em>max_volume</em><span class="sig-paren">)</span><a class="headerlink" href="#opentrons.instruments.Pipette.set_max_volume" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set this pipette&#8217;s maximum volume, equal to the number of
-microliters drawn when aspirating with the plunger&#8217;s full range</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>max_volume</strong> (<em>int or float</em>) &#8211; The maximum number of microliters this <a class="reference internal" href="#opentrons.instruments.Pipette" title="opentrons.instruments.Pipette"><code class="xref any py py-class docutils literal"><span class="pre">Pipette</span></code></a> can hold.
-Must be calculated and set after plunger calibrations to ensure
-accuracy</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="opentrons.instruments.Pipette.set_speed">
 <code class="descname">set_speed</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#opentrons.instruments.Pipette.set_speed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the speed (mm/minute) the <a class="reference internal" href="#opentrons.instruments.Pipette" title="opentrons.instruments.Pipette"><code class="xref any py py-class docutils literal"><span class="pre">Pipette</span></code></a> plunger will move
@@ -1063,9 +1035,7 @@ method will skip the command queue and execute immediately</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">set_max_volume</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> 
-<span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
 <span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">touch_tip</span><span class="p">()</span> 
