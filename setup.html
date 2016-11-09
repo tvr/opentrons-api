@@ -49,10 +49,9 @@
 <h2>Install Anaconda and Python 3<a class="headerlink" href="#install-anaconda-and-python-3" title="Permalink to this headline">¶</a></h2>
 <p>To run Opentrons you will need to ensure you have Python 3 installed. We recommend you install <a href="#id3"><span class="problematic" id="id4">Anaconda_</span></a>: (<a class="reference external" href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a>) before going any further, this will install Python 3 for you. We recommend you use the <cite>Graphical Installer</cite> for <cite>Python3.5</cite>.</p>
 </div>
-<div class="section" id="install-jupyter">
-<h2>Install Jupyter<a class="headerlink" href="#install-jupyter" title="Permalink to this headline">¶</a></h2>
-<p>After Anaconda and Python 3 are installed, you can get started installing Jupyter by following the official [Jupyter Installation Guide](<a class="reference external" href="http://jupyter.readthedocs.io/en/latest/install.html">http://jupyter.readthedocs.io/en/latest/install.html</a>).</p>
-<p>If you have finished setting up Python 3 and you have finished going through the Jupyter installation guide it is now time to run Jupyter.</p>
+<div class="section" id="add-opentrons-channel">
+<h2>Add Opentrons Channel<a class="headerlink" href="#add-opentrons-channel" title="Permalink to this headline">¶</a></h2>
+<p>After installing Anaconda, run Anaconda Navigator. On Home screen click <cite>Channels</cite> and add <cite>opentrons</cite>. This will allow you to install <cite>opentrons</cite> package from our channel.</p>
 </div>
 <div class="section" id="launch-jupyter-notebook-app">
 <h2>Launch Jupyter Notebook App<a class="headerlink" href="#launch-jupyter-notebook-app" title="Permalink to this headline">¶</a></h2>
@@ -92,11 +91,14 @@
 </div>
 <div class="section" id="install-opentrons-api">
 <h2>Install Opentrons API<a class="headerlink" href="#install-opentrons-api" title="Permalink to this headline">¶</a></h2>
-<p>After running the aforementioned step a new text box will appear for you to write code in. We will use this text box to install the Opentrons API.</p>
-<ul class="simple">
-<li>Copy paste this statement into the new text box <cite>!pip install &#8211;upgrade git+https://github.com/OpenTrons/opentrons-api.git&#64;master#egg=opentrons</cite></li>
-</ul>
-<p>The should execute the installation process of the Opentrons API. The last line of this installation process should say <cite>Successfully installed opentrons-sdk-1.0</cite></p>
+<p>In Jupyter click <cite>Conda</cite>. Find and install <cite>opentrons</cite> package. Make sure to check for updates!</p>
+<p>After this step you should be able to run:</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>import opentrons
+opentrons.__version__</dd>
+</dl>
+<p>Which should return the version of opentrons package installed.</p>
 <p>If you made it this far without any errors then you are done! You should treat yourself well tonight and celebrate your successes generously!</p>
 <p>If you want to learn more about Jupyter Notebook Navigation [check this out](<a class="reference external" href="http://nbviewer.jupyter.org/github/jupyter/notebook/blob/master/docs/source/examples/Notebook/Notebook%20Basics.ipynb">http://nbviewer.jupyter.org/github/jupyter/notebook/blob/master/docs/source/examples/Notebook/Notebook%20Basics.ipynb</a>):</p>
 </div>
@@ -112,7 +114,7 @@
   <ul>
 <li><a class="reference internal" href="#">Running Opentrons API in Jupyter</a><ul>
 <li><a class="reference internal" href="#install-anaconda-and-python-3">Install Anaconda and Python 3</a></li>
-<li><a class="reference internal" href="#install-jupyter">Install Jupyter</a></li>
+<li><a class="reference internal" href="#add-opentrons-channel">Add Opentrons Channel</a></li>
 <li><a class="reference internal" href="#launch-jupyter-notebook-app">Launch Jupyter Notebook App</a></li>
 <li><a class="reference internal" href="#programming-in-jupyter-notebook-hello-world">Programming in Jupyter Notebook: Hello World!</a></li>
 <li><a class="reference internal" href="#install-opentrons-api">Install Opentrons API</a></li>
