@@ -814,7 +814,7 @@ method will skip the command queue and execute immediately</td>
 
 <dl class="method">
 <dt id="opentrons.instruments.Pipette.mix">
-<code class="descname">mix</code><span class="sig-paren">(</span><em>volume=None</em>, <em>location=None</em>, <em>repetitions=1</em>, <em>rate=1.0</em>, <em>enqueue=True</em><span class="sig-paren">)</span><a class="headerlink" href="#opentrons.instruments.Pipette.mix" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mix</code><span class="sig-paren">(</span><em>repetitions=1</em>, <em>volume=None</em>, <em>location=None</em>, <em>rate=1.0</em>, <em>enqueue=True</em><span class="sig-paren">)</span><a class="headerlink" href="#opentrons.instruments.Pipette.mix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mix a volume of liquid (in microliters/uL) using this pipette</p>
 <p class="rubric">Notes</p>
 <p>If no <cite>location</cite> is passed, the pipette will mix
@@ -825,11 +825,11 @@ from it&#8217;s current position. If no <cite>volume</cite> is passed,
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>repetitions</strong> (<em>int</em>) &#8211; How many times the pipette should mix (Default: 1)</li>
 <li><strong>volume</strong> (<em>int or float</em>) &#8211; The number of microliters to mix (Default: self.max_volume)</li>
 <li><strong>location</strong> (<code class="xref any docutils literal"><span class="pre">Placeable</span></code> or tuple(<code class="xref any docutils literal"><span class="pre">Placeable</span></code>, <code class="xref any docutils literal"><span class="pre">Vector</span></code>)) &#8211; The <code class="xref any docutils literal"><span class="pre">Placeable</span></code> (<code class="xref any docutils literal"><span class="pre">Well</span></code>) to perform the mix.
 Can also be a tuple with first item <code class="xref any docutils literal"><span class="pre">Placeable</span></code>,
 second item relative <code class="xref any docutils literal"><span class="pre">Vector</span></code></li>
-<li><strong>repetitions</strong> (<em>int</em>) &#8211; How many times the pipette should mix (Default: 1)</li>
 <li><strong>rate</strong> (<em>float</em>) &#8211; Set plunger speed for this mix, where
 speed = rate * (aspirate_speed or dispense_speed)
 (see <a class="reference internal" href="#opentrons.instruments.Pipette.set_speed" title="opentrons.instruments.Pipette.set_speed"><code class="xref py py-meth docutils literal"><span class="pre">set_speed()</span></code></a>)</li>
@@ -853,12 +853,12 @@ method will skip the command queue and execute immediately</li>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># mix 50uL in a Well, three times</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
 <span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># mix 3x with the pipette&#39;s max volume, from current position</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="n">repetitions</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 
 <span class="go">&lt;opentrons.instruments.pipette.Pipette object at ...&gt;</span>
 </pre></div>
 </div>
