@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Opentrons API Tips and Tricks &#8212; Opentrons API 2.0 documentation</title>
+    <title>Advanced Use Cases &#8212; Opentrons API 2.0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Opentrons API 2.0 documentation" href="index.html" />
-    <link rel="next" title="Running Opentrons API in Jupyter" href="setup.html" />
-    <link rel="prev" title="Developer Interface" href="api.html" />
+    <link rel="next" title="Modules" href="module.html" />
+    <link rel="prev" title="Container Well Access" href="well_access.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -43,8 +43,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="opentrons-api-tips-and-tricks">
-<span id="tips-and-tricks"></span><h1>Opentrons API Tips and Tricks<a class="headerlink" href="#opentrons-api-tips-and-tricks" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="advanced-use-cases">
+<span id="tips-and-tricks"></span><h1>Advanced Use Cases<a class="headerlink" href="#advanced-use-cases" title="Permalink to this headline">¶</a></h1>
 <p>The following examples assume the containers and pipettes:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">opentrons.robot</span> <span class="k">import</span> <span class="n">Robot</span>
 <span class="kn">from</span> <span class="nn">opentrons</span> <span class="k">import</span> <span class="n">containers</span><span class="p">,</span> <span class="n">instruments</span>
@@ -59,146 +59,29 @@
 <span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="basics">
-<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="simple-transfer">
-<h3>Simple Transfer<a class="headerlink" href="#simple-transfer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>        <span class="c1"># deletes all previously created commands</span>
-
-<span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>      <span class="c1"># add new commands to queue</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>     <span class="c1"># simulate all commands</span>
-<span class="c1"># robot.run()        # run on physical robot if connected</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="running-on-a-robot">
-<h3>Running on a Robot<a class="headerlink" href="#running-on-a-robot" title="Permalink to this headline">¶</a></h3>
-<p>List your serial ports:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">my_ports</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">get_serial_ports_list</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_ports</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Sample output on OS X / Linux:</p>
-<p>On Windows:</p>
-<p>Pass the port name string into <a class="reference internal" href="api.html#opentrons.Robot.connect" title="opentrons.Robot.connect"><code class="xref any py py-meth docutils literal"><span class="pre">connect</span></code></a> to connect to a physical robot:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;/dev/tty.usbmodem1421&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="home">
-<h3>Home<a class="headerlink" href="#home" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
-
-<span class="c1"># these will be executed immediately</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>          <span class="c1"># by default homes Z first, then all other axis</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span>      <span class="c1"># you can also specify the axis</span>
-
-<span class="c1"># this will get enqueued and executed after :meth:``~opentrons.robot.Robot.run`` has been called:</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="aspirate-then-dispense-in-a-single-well">
-<h3>Aspirate then dispense in a single well<a class="headerlink" href="#aspirate-then-dispense-in-a-single-well" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dispense</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="transfer-from-one-well-to-another">
-<h3>Transfer from one well to another<a class="headerlink" href="#transfer-from-one-well-to-another" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="pick-up-then-drop-tip-at-a-single-location">
-<h3>Pick up then drop tip at a single location<a class="headerlink" href="#pick-up-then-drop-tip-at-a-single-location" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="pick-up-then-drop-tip-somewhere-else">
-<h3>Pick up then drop tip somewhere else<a class="headerlink" href="#pick-up-then-drop-tip-somewhere-else" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">])</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">trash</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="mixing-at-a-well">
-<h3>Mixing at a well<a class="headerlink" href="#mixing-at-a-well" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>   <span class="c1"># arguments are (repetitions, volume, location)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="iterating-through-wells">
-<h3>Iterating through wells<a class="headerlink" href="#iterating-through-wells" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">96</span><span class="p">):</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">well</span> <span class="ow">in</span> <span class="n">plate</span><span class="p">:</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">well</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">plate</span><span class="o">.</span><span class="n">rows</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">well</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
-        <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">well</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">well</span> <span class="ow">in</span> <span class="n">plate</span><span class="o">.</span><span class="n">cols</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]:</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">well</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="distribute-to-multiple-wells">
-<h3>Distribute to multiple wells<a class="headerlink" href="#distribute-to-multiple-wells" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B3&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="delay">
-<h3>Delay<a class="headerlink" href="#delay" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="advanced-use-cases">
-<h2>Advanced Use Cases<a class="headerlink" href="#advanced-use-cases" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="distribute-to-entire-plate">
-<h3>Distribute to entire plate<a class="headerlink" href="#distribute-to-entire-plate" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
-
-<span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
+<div class="section" id="automatically-refill-volume">
+<h2>Automatically Refill Volume<a class="headerlink" href="#automatically-refill-volume" title="Permalink to this headline">¶</a></h2>
+<p>Want to deposit liquid to an entire plate, but don&#8217;t want to have to tell the robot when to pick up more liquid?  This example will keep track of the volume in the pipette and automatically picks up more liquid when there isn&#8217;t enough for the next dispense.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
 
 <span class="n">dispense_volume</span> <span class="o">=</span> <span class="mi">13</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">96</span><span class="p">):</span>
-    <span class="c1"># refill the tip if it&#39;s empty</span>
     <span class="k">if</span> <span class="n">p200</span><span class="o">.</span><span class="n">current_volume</span> <span class="o">&lt;</span> <span class="n">dispense_volume</span><span class="p">:</span>
         <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">trough</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
     <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">dispense_volume</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">touch_tip</span><span class="p">()</span>
 
 <span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">trash</span><span class="p">)</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="serial-dilution">
-<h3>Serial Dilution<a class="headerlink" href="#serial-dilution" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Here we assume a 96-well plate with 12 rows and 8 columns</span>
-<span class="c1"># A trough has 8 wells, with liquids corresponding to plates columns</span>
-<span class="c1"># We are replacing tips for each liquid / column</span>
-<span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plate</span><span class="o">.</span><span class="n">cols</span><span class="p">):</span>
+<h2>Serial Dilution<a class="headerlink" href="#serial-dilution" title="Permalink to this headline">¶</a></h2>
+<p>This serial dilution example assumes a standard 96 well plate, using a different tip per column and a different trough row per column.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plate</span><span class="o">.</span><span class="n">cols</span><span class="p">):</span>
     <span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>  <span class="c1"># Use one tip per column</span>
 
-    <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="n">trough</span><span class="p">[</span><span class="n">t</span><span class="p">])</span> <span class="c1"># aspirate from a drough</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>         <span class="c1"># dispense everythig into a first well</span>
+    <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="n">trough</span><span class="p">[</span><span class="n">t</span><span class="p">])</span> <span class="c1"># aspirate from a trough</span>
+    <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>         <span class="c1"># dispense everything into a first well</span>
 
     <span class="c1"># zip(col[:-1], col[1:]) returns pairs of</span>
     <span class="c1"># (A1, A2), (A2, A3), (A3, A4), etc</span>
@@ -211,21 +94,22 @@
 </div>
 </div>
 <div class="section" id="plate-mapping">
-<h3>Plate Mapping<a class="headerlink" href="#plate-mapping" title="Permalink to this headline">¶</a></h3>
+<h2>Plate Mapping<a class="headerlink" href="#plate-mapping" title="Permalink to this headline">¶</a></h2>
+<p>Deposit various volumes of liquids into the same plate of wells, and automatically refill the tip volume when it runs out.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sources</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;A1&#39;</span><span class="p">:</span> <span class="s1">&#39;water&#39;</span><span class="p">,</span>
     <span class="s1">&#39;A2&#39;</span><span class="p">:</span> <span class="s1">&#39;sugar&#39;</span><span class="p">,</span>
     <span class="s1">&#39;A3&#39;</span><span class="p">:</span> <span class="s1">&#39;purple&#39;</span>
 <span class="p">}</span>
 <span class="n">destinations</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;A1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span>
-    <span class="s1">&#39;B1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span>
-    <span class="s1">&#39;C1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span>
-    <span class="s1">&#39;D1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span>
-    <span class="s1">&#39;E1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
-    <span class="s1">&#39;F1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
-    <span class="s1">&#39;G1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
-    <span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+    <span class="s1">&#39;A1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s1">&#39;B1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="s1">&#39;C1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+    <span class="s1">&#39;D1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+    <span class="s1">&#39;E1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+    <span class="s1">&#39;F1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span>
+    <span class="s1">&#39;G1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+    <span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>
 <span class="p">}</span>
 
 <span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
@@ -247,23 +131,10 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="precision-pipetting-within-a-well">
-<h3>Precision pipetting within a well<a class="headerlink" href="#precision-pipetting-within-a-well" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
-
-<span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-
-<span class="c1"># aspirate from 3mm above the bottom of a well</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bottom</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-
-<span class="c1"># dispense from 1mm below the top of a well</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-
-<span class="c1"># you can also simple move somewhere using Pipette.move_to()</span>
-<span class="c1"># &#39;arc&#39; will move the head up, then over, then down</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">95</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;arc&#39;</span><span class="p">)</span>
-<span class="c1"># &#39;direct&#39; will move the head in a straight line to the destination</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">95</span><span class="p">]</span><span class="o">.</span><span class="n">bottom</span><span class="p">(),</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;direct&#39;</span><span class="p">)</span>
+<div class="section" id="precision-pipetting">
+<h2>Precision Pipetting<a class="headerlink" href="#precision-pipetting" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to deposit liquid around the edge of a well.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
 <span class="c1"># rotate around the edge of the well</span>
 <span class="c1"># dropping 10ul at a time</span>
@@ -280,10 +151,7 @@
     <span class="n">theta</span> <span class="o">+=</span> <span class="mf">0.314</span>
 
 <span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-
-<span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
 </pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -296,28 +164,11 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Opentrons API Tips and Tricks</a><ul>
-<li><a class="reference internal" href="#basics">Basics</a><ul>
-<li><a class="reference internal" href="#simple-transfer">Simple Transfer</a></li>
-<li><a class="reference internal" href="#running-on-a-robot">Running on a Robot</a></li>
-<li><a class="reference internal" href="#home">Home</a></li>
-<li><a class="reference internal" href="#aspirate-then-dispense-in-a-single-well">Aspirate then dispense in a single well</a></li>
-<li><a class="reference internal" href="#transfer-from-one-well-to-another">Transfer from one well to another</a></li>
-<li><a class="reference internal" href="#pick-up-then-drop-tip-at-a-single-location">Pick up then drop tip at a single location</a></li>
-<li><a class="reference internal" href="#pick-up-then-drop-tip-somewhere-else">Pick up then drop tip somewhere else</a></li>
-<li><a class="reference internal" href="#mixing-at-a-well">Mixing at a well</a></li>
-<li><a class="reference internal" href="#iterating-through-wells">Iterating through wells</a></li>
-<li><a class="reference internal" href="#distribute-to-multiple-wells">Distribute to multiple wells</a></li>
-<li><a class="reference internal" href="#delay">Delay</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#advanced-use-cases">Advanced Use Cases</a><ul>
-<li><a class="reference internal" href="#distribute-to-entire-plate">Distribute to entire plate</a></li>
+<li><a class="reference internal" href="#">Advanced Use Cases</a><ul>
+<li><a class="reference internal" href="#automatically-refill-volume">Automatically Refill Volume</a></li>
 <li><a class="reference internal" href="#serial-dilution">Serial Dilution</a></li>
 <li><a class="reference internal" href="#plate-mapping">Plate Mapping</a></li>
-<li><a class="reference internal" href="#precision-pipetting-within-a-well">Precision pipetting within a well</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#precision-pipetting">Precision Pipetting</a></li>
 </ul>
 </li>
 </ul>
@@ -325,8 +176,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="api.html" title="previous chapter">Developer Interface</a></li>
-      <li>Next: <a href="setup.html" title="next chapter">Running Opentrons API in Jupyter</a></li>
+      <li>Previous: <a href="well_access.html" title="previous chapter">Container Well Access</a></li>
+      <li>Next: <a href="module.html" title="next chapter">Modules</a></li>
   </ul></li>
 </ul>
 </div>
