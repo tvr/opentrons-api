@@ -300,8 +300,8 @@
 <div class="section" id="dispensing-positions">
 <h3>Dispensing Positions<a class="headerlink" href="#dispensing-positions" title="Permalink to this headline">¶</a></h3>
 <p>Want to deposit at the top of a tube?  Pull liquid from the bottom of the well?  Mix from the middle?  Easy.</p>
-<p><strong>top</strong> (<em>distance</em>)</p>
-<p><strong>bottom</strong> (<em>distance</em>)</p>
+<p><strong>container.top</strong> (<em>distance</em>)</p>
+<p><strong>container.bottom</strong> (<em>distance</em>)</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>distance -</strong> distance from calibration position (mm)</li>
@@ -318,6 +318,28 @@
 </div>
 <div class="section" id="homing">
 <h2>Homing<a class="headerlink" href="#homing" title="Permalink to this headline">¶</a></h2>
+<p>You can instruct the robot to home at any point in the protocol, or just home one axis.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="move-to">
+<h2>Move To<a class="headerlink" href="#move-to" title="Permalink to this headline">¶</a></h2>
+<p>If you don&#8217;t want to aspirate, dispense or mix, you can still send your robot to a container using the move_to() command.</p>
+<p><strong>pipette.move_to</strong> (<em>distance, strategy</em>)</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>distance -</strong> distance from calibration position (mm)</li>
+<li><strong>strategy -</strong> the type of path you want to use, either &#8216;direct&#8217; (straight line) or &#8216;arc&#8217; (move up Z, over XY, then down Z)</li>
+</ul>
+</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">95</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span> <span class="s1">&#39;arc&#39;</span><span class="p">)</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="s1">&#39;direct)</span>
+</pre></div>
+</div>
+<p>Be careful using the &#8216;direct&#8217; strategy as the robot could crash into anything between your start and end locations.</p>
 </div>
 <div class="section" id="debugging-your-protocol">
 <h2>Debugging Your Protocol<a class="headerlink" href="#debugging-your-protocol" title="Permalink to this headline">¶</a></h2>
@@ -375,6 +397,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#homing">Homing</a></li>
+<li><a class="reference internal" href="#move-to">Move To</a></li>
 <li><a class="reference internal" href="#debugging-your-protocol">Debugging Your Protocol</a><ul>
 <li><a class="reference internal" href="#print">Print()</a></li>
 <li><a class="reference internal" href="#robot-commands">Robot.Commands()</a></li>
