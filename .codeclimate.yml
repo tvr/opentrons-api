@@ -1,0 +1,4 @@
+exclude_paths:
+- "tests/"
+- "**/vendor/"
+- "docs/sphinxext/ipython_sphinxext/*.py"
