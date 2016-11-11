@@ -26,8 +26,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Opentrons API 2.0 documentation" href="index.html" />
-    <link rel="next" title="Getting Started" href="getting_started.html" />
-    <link rel="prev" title="Opentrons API: Simple Biology Lab Protocol Coding" href="index.html" />
+    <link rel="prev" title="Opentrons API Tips and Tricks" href="tips_and_tricks.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -45,19 +44,17 @@
             
   <div class="section" id="running-opentrons-api-in-jupyter">
 <span id="setup"></span><h1>Running Opentrons API in Jupyter<a class="headerlink" href="#running-opentrons-api-in-jupyter" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="jupyter-code-environment">
-<h2>Jupyter Code Environment<a class="headerlink" href="#jupyter-code-environment" title="Permalink to this headline">¶</a></h2>
 <p>Jupyter is an interactive programming environment that runs in the browser. Jupyter can support multiple programming languages but we will only be using it for Python 3.</p>
 <div class="section" id="install-anaconda-and-python-3">
-<h3>Install Anaconda and Python 3<a class="headerlink" href="#install-anaconda-and-python-3" title="Permalink to this headline">¶</a></h3>
+<h2>Install Anaconda and Python 3<a class="headerlink" href="#install-anaconda-and-python-3" title="Permalink to this headline">¶</a></h2>
 <p>To run Opentrons you will need to ensure you have Python 3 installed. We recommend you install <a href="#id3"><span class="problematic" id="id4">Anaconda_</span></a>: (<a class="reference external" href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a>) before going any further, this will install Python 3 for you. We recommend you use the <cite>Graphical Installer</cite> for <cite>Python3.5</cite>.</p>
 </div>
-<div class="section" id="install-jupyter">
-<h3>Install Jupyter<a class="headerlink" href="#install-jupyter" title="Permalink to this headline">¶</a></h3>
-<p>After Anaconda and Python 3 are installed, you can get started installing Jupyter by following the official [Jupyter Installation Guide](<a class="reference external" href="http://jupyter.readthedocs.io/en/latest/install.html">http://jupyter.readthedocs.io/en/latest/install.html</a>).</p>
+<div class="section" id="add-opentrons-channel">
+<h2>Add Opentrons Channel<a class="headerlink" href="#add-opentrons-channel" title="Permalink to this headline">¶</a></h2>
+<p>After installing Anaconda, run Anaconda Navigator. On Home screen click <cite>Channels</cite> and add <cite>opentrons</cite>. This will allow you to install <cite>opentrons</cite> package from our channel.</p>
 </div>
 <div class="section" id="launch-jupyter-notebook-app">
-<h3>Launch Jupyter Notebook App<a class="headerlink" href="#launch-jupyter-notebook-app" title="Permalink to this headline">¶</a></h3>
+<h2>Launch Jupyter Notebook App<a class="headerlink" href="#launch-jupyter-notebook-app" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>With GUI &#8211; <em>Reccomended for Beginners</em>:</dt>
 <dd><ol class="first last arabic simple">
@@ -76,7 +73,7 @@
 </dl>
 </div>
 <div class="section" id="programming-in-jupyter-notebook-hello-world">
-<h3>Programming in Jupyter Notebook: Hello World!<a class="headerlink" href="#programming-in-jupyter-notebook-hello-world" title="Permalink to this headline">¶</a></h3>
+<h2>Programming in Jupyter Notebook: Hello World!<a class="headerlink" href="#programming-in-jupyter-notebook-hello-world" title="Permalink to this headline">¶</a></h2>
 <p>When the Jupyter Notebook App is launched on your browser, follow these steps to open a <cite>Notebook</cite></p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -92,16 +89,9 @@
 </ol>
 </div></blockquote>
 </div>
-</div>
 <div class="section" id="install-opentrons-api">
 <h2>Install Opentrons API<a class="headerlink" href="#install-opentrons-api" title="Permalink to this headline">¶</a></h2>
-<p>Before running any code, you need to install the Opentrons API.</p>
-<p>If you are running Anaconda, open Anaconda Navigator. On Home screen click <cite>Channels</cite> and add <cite>opentrons</cite>. This will allow you to install <cite>opentrons</cite> package from our channel.</p>
 <p>In Jupyter click <cite>Conda</cite>. Find and install <cite>opentrons</cite> package. Make sure to check for updates!</p>
-<p>If you are not using Anaconda copy and paste the following code into the first cell of your notebook. This only needs to be done the first time you use Jupyter, so feel free to comment it out after it successfully installs.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>!pip install --upgrade git+git://github.com/OpenTrons/opentrons-api.git@master#egg<span class="o">=</span>opentrons
-</pre></div>
-</div>
 <p>After this step you should be able to run:</p>
 <dl class="docutils">
 <dt>::</dt>
@@ -123,13 +113,10 @@ opentrons.__version__</dd>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Running Opentrons API in Jupyter</a><ul>
-<li><a class="reference internal" href="#jupyter-code-environment">Jupyter Code Environment</a><ul>
 <li><a class="reference internal" href="#install-anaconda-and-python-3">Install Anaconda and Python 3</a></li>
-<li><a class="reference internal" href="#install-jupyter">Install Jupyter</a></li>
+<li><a class="reference internal" href="#add-opentrons-channel">Add Opentrons Channel</a></li>
 <li><a class="reference internal" href="#launch-jupyter-notebook-app">Launch Jupyter Notebook App</a></li>
 <li><a class="reference internal" href="#programming-in-jupyter-notebook-hello-world">Programming in Jupyter Notebook: Hello World!</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#install-opentrons-api">Install Opentrons API</a></li>
 </ul>
 </li>
@@ -138,8 +125,7 @@ opentrons.__version__</dd>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Opentrons API: Simple Biology Lab Protocol Coding</a></li>
-      <li>Next: <a href="getting_started.html" title="next chapter">Getting Started</a></li>
+      <li>Previous: <a href="tips_and_tricks.html" title="previous chapter">Opentrons API Tips and Tricks</a></li>
   </ul></li>
 </ul>
 </div>
