@@ -134,7 +134,7 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You can update your API when by repeating the !pip install, but remember to restart your notebook afterwards for the changes to take effect</p>
+<p class="last">You can update your API by repeating the !pip install, but remember to restart your notebook afterwards for the changes to take effect</p>
 </div>
 </div>
 <div class="section" id="deck-set-up">
@@ -148,12 +148,20 @@
 <h3>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h3>
 <p>For each container you want to use on the deck, you need to load it into your file by telling the robot what it is, where it is, and what to label it. The label you give the container is what will appear in the app when you start calibrating.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mycontainer</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-        <span class="s1">&#39;container type&#39;</span><span class="p">,</span>       <span class="c1"># trough-12row, tiprack-200ul, 96-PCR-flat</span>
-        <span class="s1">&#39;slot position&#39;</span>           <span class="c1"># A1, B1, C1</span>
-        <span class="s1">&#39;given name&#39;</span>                <span class="c1"># calibration name</span>
+        <span class="s1">&#39;container type&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;slot position&#39;</span>
+        <span class="s1">&#39;given name&#39;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
+<p><strong>containers.load</strong> (<em>container, slot, name</em>)</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>container -</strong> type of container (trough-12-row, etc)</li>
+<li><strong>slot -</strong> the slot location on the deck (A1-E3)</li>
+<li><strong>name -</strong> custom name</li>
+</ul>
+</div></blockquote>
 <p>The example below declares 3 different containers and assigns them to the appropriate slots on the deck.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tiprack</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
         <span class="s1">&#39;tiprack-200ul&#39;</span><span class="p">,</span>
@@ -173,10 +181,6 @@
         <span class="s1">&#39;trash&#39;</span>
 <span class="p">)</span>
 </pre></div>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">For a complete list of container types, go here [link]</p>
 </div>
 <p>The robot will save calibration data from old runs based on the container type, slot position and given name.  Thus, if you always give something the same arguments, it will populate the app with old calibration data.  If you do not want it to do this, simply change the given name to unique names.</p>
 </div>
