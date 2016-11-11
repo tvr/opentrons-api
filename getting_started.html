@@ -36,9 +36,75 @@
 
   </head>
   <body role="document">
-  
-
-    <div class="document">
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#import-opentrons-api">Import Opentrons API</a></li>
+<li><a class="reference internal" href="#deck-set-up">Deck Set Up</a><ul>
+<li><a class="reference internal" href="#containers">Containers</a></li>
+<li><a class="reference internal" href="#pipettes">Pipettes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#commands">Commands</a><ul>
+<li><a class="reference internal" href="#pick-up-and-drop-tip">Pick Up and Drop Tip</a></li>
+<li><a class="reference internal" href="#aspirate">Aspirate</a></li>
+<li><a class="reference internal" href="#dispense">Dispense</a></li>
+<li><a class="reference internal" href="#mix">Mix</a></li>
+<li><a class="reference internal" href="#chaining-commands">Chaining Commands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#command-attributes">Command Attributes</a><ul>
+<li><a class="reference internal" href="#touch-tip">Touch Tip</a></li>
+<li><a class="reference internal" href="#blow-out">Blow Out</a></li>
+<li><a class="reference internal" href="#delay">Delay</a></li>
+<li><a class="reference internal" href="#dispensing-positions">Dispensing Positions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#homing">Homing</a></li>
+<li><a class="reference internal" href="#move-to">Move To</a></li>
+<li><a class="reference internal" href="#debugging-your-protocol">Debugging Your Protocol</a><ul>
+<li><a class="reference internal" href="#print">Print()</a></li>
+<li><a class="reference internal" href="#robot-commands">Robot.Commands()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="setup.html" title="previous chapter">Running Opentrons API in Jupyter</a></li>
+      <li>Next: <a href="running_a_protocol.html" title="next chapter">Running a Protocol</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/getting_started.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
@@ -379,72 +445,8 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Getting Started</a><ul>
-<li><a class="reference internal" href="#import-opentrons-api">Import Opentrons API</a></li>
-<li><a class="reference internal" href="#deck-set-up">Deck Set Up</a><ul>
-<li><a class="reference internal" href="#containers">Containers</a></li>
-<li><a class="reference internal" href="#pipettes">Pipettes</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#commands">Commands</a><ul>
-<li><a class="reference internal" href="#pick-up-and-drop-tip">Pick Up and Drop Tip</a></li>
-<li><a class="reference internal" href="#aspirate">Aspirate</a></li>
-<li><a class="reference internal" href="#dispense">Dispense</a></li>
-<li><a class="reference internal" href="#mix">Mix</a></li>
-<li><a class="reference internal" href="#chaining-commands">Chaining Commands</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#command-attributes">Command Attributes</a><ul>
-<li><a class="reference internal" href="#touch-tip">Touch Tip</a></li>
-<li><a class="reference internal" href="#blow-out">Blow Out</a></li>
-<li><a class="reference internal" href="#delay">Delay</a></li>
-<li><a class="reference internal" href="#dispensing-positions">Dispensing Positions</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#homing">Homing</a></li>
-<li><a class="reference internal" href="#move-to">Move To</a></li>
-<li><a class="reference internal" href="#debugging-your-protocol">Debugging Your Protocol</a><ul>
-<li><a class="reference internal" href="#print">Print()</a></li>
-<li><a class="reference internal" href="#robot-commands">Robot.Commands()</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="setup.html" title="previous chapter">Running Opentrons API in Jupyter</a></li>
-      <li>Next: <a href="running_a_protocol.html" title="next chapter">Running a Protocol</a></li>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/getting_started.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
+    <div class="clearer"></div>
+  </div>
     <div class="footer">
       &copy;2016, Opentrons.
       
