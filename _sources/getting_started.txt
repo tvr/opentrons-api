@@ -1,7 +1,7 @@
 .. _getting_started:
 
 ===============
-Getting Started
+Writing a Protocol
 ===============
 
 Welcome to the API (Application Program Interface).  These tutorials assume no base knowledge of python. We recommend installing the Jupyter notebook to run Opentrons API before attempting these examples. Please refer to :ref:`setup` for detailed instructions.
@@ -18,15 +18,43 @@ Before running any code, you need to install the Opentrons API in your jupyter n
 
 .. code-block:: bash
 	
-	!pip install --upgrade git+git://github.com/OpenTrons/opentrons-api.git@master#egg=opentrons
+	!pip install --upgrade opentrons
 
 Now that you've installed Opentrons API on your computer, you have access to a variety of robot container and instrument commands. You need to import them to each project (protocol) in order to access these commands.  Unlike the install, this set of imports needs to be done at the start of each protocol.
 
 .. testsetup:: main
 
-  from opentrons import robot
+  from opentrons import robot, instruments, containers
   robot.reset()
   i = 0
+
+  tiprack = containers.load(
+      'tiprack-200ul',
+      'A2',
+      'tiprack-for-test')
+
+  plate = containers.load(
+		'96-PCR-flat',
+		'B3',
+		'plate-for-test'
+  )
+
+  trash = containers.load(
+		'point',
+		'C1',
+		'trash-for-test'
+  )
+  p200 = instruments.Pipette(
+      name="p200",
+      trash_container=trash,
+      tip_racks=[tiprack],
+      min_volume=20,
+      max_volume=2000,
+      axis="a",
+      channels=1
+  )
+
+  p200.reset()
 
 .. testcode:: main
 	
@@ -108,17 +136,19 @@ Pipettes
 		name="mypipette",			
 		trash_container=trash,		
 		tip_racks=[tiprack],		
-		min_volume=20,				
+		min_volume=20,
+		max_volume=200				
 		axis="b",					
 		channels=1					
 	)
 
-**instruments.Pipette** (*name, trash_container, tip_racks, min_volume, axis, channels*)
+**instruments.Pipette** (*name, trash_container, tip_racks, min_volume, max_volume, axis, channels*)
 
 	* **name -** name you give pipette
 	* **trash_container -** given name of container where you want to deposit tips
 	* **tip_racks -** array (list) of container(s) where you want to pick up tips
-	* **min_volume=20 -** minimum volume of pipette
+	* **min_volume -** minimum volume of pipette
+	* **max_volume -** maximum volume of pipette
 	* **axis -** axis the pipette is on (a or b)
 	* **channels -** number of channels (1 or 8)
 
@@ -126,21 +156,15 @@ This example loads a single channel, 20-200 uL pipette on the b axis that pulls 
 
 .. testcode:: main
 
-	p200 = instruments.Pipette(
+	pipette = instruments.Pipette(
 		name="p200",
 		trash_container=trash,
 		tip_racks=[tiprack],
 		min_volume=20,
+		max_volume=200,
 		axis="b",
 		channels=1
 	)
-
-Once you load your pipette, you should assign the maximum volume.  
-
-.. testcode:: main
-	
-	p200.set_max_volume(2000)  # maximum volume
-
 
 Commands 
 -----------------------------
@@ -325,7 +349,6 @@ Containers are calibrated to the bottom of the well, and each labware definition
 .. testcode:: main
 
 	p200.dispense(plate['A1'].top())
-	p200.aspirate(1000, plate['B2'].bottom())
 	p200.mix(3, 100, plate['B2'].bottom(5))
 	p200.dispense(plate['A1'].top(-3))
 
@@ -389,7 +412,7 @@ First, you can use the print command (a basic python command) to print well loca
 
 This is useful when trying to determine if the location you're calling is actually the location you want, or if something is iterating properly (more on iteration later)
 
-Robot.Commands()
+Getting Robot Commands
 ^^^^^^^^^^^^^^^^
 
 Another useful tool is robot.commands(), which will print out the list of actions the virtual robot just performed.
