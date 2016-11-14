@@ -27,7 +27,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Opentrons API 2.0 documentation" href="index.html" />
     <link rel="next" title="Running a Protocol" href="running_a_protocol.html" />
-    <link rel="prev" title="Running Opentrons API in Jupyter" href="setup.html" />
+    <link rel="prev" title="Setting Up Jupyter" href="setup.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -43,45 +43,51 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Getting Started</a><ul>
-<li><a class="reference internal" href="#import-opentrons-api">Import Opentrons API</a></li>
-<li><a class="reference internal" href="#deck-set-up">Deck Set Up</a><ul>
-<li><a class="reference internal" href="#containers">Containers</a></li>
-<li><a class="reference internal" href="#pipettes">Pipettes</a></li>
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setting Up Jupyter</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#import-opentrons-api">Import Opentrons API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deck-set-up">Deck Set Up</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#containers">Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pipettes">Pipettes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#commands">Commands</a><ul>
-<li><a class="reference internal" href="#pick-up-and-drop-tip">Pick Up and Drop Tip</a></li>
-<li><a class="reference internal" href="#aspirate">Aspirate</a></li>
-<li><a class="reference internal" href="#dispense">Dispense</a></li>
-<li><a class="reference internal" href="#mix">Mix</a></li>
-<li><a class="reference internal" href="#chaining-commands">Chaining Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pick-up-and-drop-tip">Pick Up and Drop Tip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aspirate">Aspirate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dispense">Dispense</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mix">Mix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chaining-commands">Chaining Commands</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#command-attributes">Command Attributes</a><ul>
-<li><a class="reference internal" href="#touch-tip">Touch Tip</a></li>
-<li><a class="reference internal" href="#blow-out">Blow Out</a></li>
-<li><a class="reference internal" href="#delay">Delay</a></li>
-<li><a class="reference internal" href="#dispensing-positions">Dispensing Positions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-attributes">Command Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#touch-tip">Touch Tip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#blow-out">Blow Out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#delay">Delay</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dispensing-positions">Dispensing Positions</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#homing">Homing</a></li>
-<li><a class="reference internal" href="#move-to">Move To</a></li>
-<li><a class="reference internal" href="#debugging-your-protocol">Debugging Your Protocol</a><ul>
-<li><a class="reference internal" href="#print">Print()</a></li>
-<li><a class="reference internal" href="#robot-commands">Robot.Commands()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#homing">Homing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#move-to">Move To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-your-protocol">Debugging Your Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#print">Print()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-commands">Robot.Commands()</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="running_a_protocol.html">Running a Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="well_access.html">Container Well Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Advanced Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Developer Interface</a></li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="setup.html" title="previous chapter">Running Opentrons API in Jupyter</a></li>
+      <li>Previous: <a href="setup.html" title="previous chapter">Setting Up Jupyter</a></li>
       <li>Next: <a href="running_a_protocol.html" title="next chapter">Running a Protocol</a></li>
   </ul></li>
 </ul>
@@ -111,7 +117,7 @@
             
   <div class="section" id="getting-started">
 <span id="id1"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to the API (Application Program Interface).  These tutorials assume no base knowledge of python. We recommend installing the Jupyter notebook to run Opentrons API before attempting these examples. Please refer to <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Running Opentrons API in Jupyter</span></a> for detailed instructions.</p>
+<p>Welcome to the API (Application Program Interface).  These tutorials assume no base knowledge of python. We recommend installing the Jupyter notebook to run Opentrons API before attempting these examples. Please refer to <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Setting Up Jupyter</span></a> for detailed instructions.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">Separate your installs, imports, containers and commands into separate cells for easy testing!</p>
