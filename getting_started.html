@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -27,12 +28,13 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Opentrons API v2.0" href="index.html" />
     <link rel="next" title="Using the App" href="running_app.html" />
-    <link rel="prev" title="Setting Up Code Environment" href="setup.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <link rel="prev" title="Setting Up Code Environment" href="setup.html" /> 
+<script>
+  window.intercomSettings = {
+    app_id: "ukpodv2l"
+  };
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/ukpodv2l';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>    
 
   </head>
   <body role="document">
@@ -137,9 +139,9 @@
 <p><strong>containers.load</strong> (<em>container, slot, name</em>)</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>container -</strong> type of container (trough-12-row, etc)</li>
-<li><strong>slot -</strong> the slot location on the deck (A1-E3)</li>
-<li><strong>name -</strong> custom name</li>
+<li><strong>container -</strong> type of container (aka &#8220;trough-12row&#8221;)</li>
+<li><strong>slot -</strong> the slot location on the deck (&#8220;A1&#8221; through &#8220;E3&#8221;)</li>
+<li><strong>name -</strong> custom name, used inside API when saving calibration data</li>
 </ul>
 </div></blockquote>
 <p>The example below declares 3 different containers and assigns them to the appropriate slots on the deck.</p>
@@ -189,7 +191,7 @@
 <li><strong>channels -</strong> number of channels (1 or 8)</li>
 </ul>
 </div></blockquote>
-<p>This example loads a single channel, 20-200 uL pipette on the b axis that pulls tips from tiprack and deposits them in trash</p>
+<p>This example loads a single channel, 20-200 uL pipette on the <code class="docutils literal"><span class="pre">b</span></code> axis that pulls tips from tiprack and deposits them in trash</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pipette</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span>
         <span class="n">name</span><span class="o">=</span><span class="s2">&quot;p200&quot;</span><span class="p">,</span>
         <span class="n">trash_container</span><span class="o">=</span><span class="n">trash</span><span class="p">,</span>
@@ -358,9 +360,9 @@
 </ul>
 </div></blockquote>
 <p>Containers are calibrated to the bottom of the well, and each labware definition has an inherent depth, which provides the calculated top position.  You can specify each of these locations anytime you use a container[position], as well as adjust them up (+) or down (-) by adding a distance.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">())</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bottom</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">())</span>         <span class="c1"># at the top of well</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bottom</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 5mm above bottom of well</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>       <span class="c1"># 3mm below top of well</span>
 </pre></div>
 </div>
 </div>
@@ -375,10 +377,11 @@
 <li><strong>enqueue -</strong> True or False</li>
 </ul>
 </div></blockquote>
-<p>When the python file is loaded into the protocol, it runs through all of the commands.  When enqueue=False, this will cause the robot to home immediately upon loading the protocol, whereas if enqueue=True, it will run when it is called in the protocol.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>When the python file is loaded into the protocol, it runs through all of the commands.  When enqueue=False (default), this will cause the robot to home immediately upon loading the protocol, whereas if enqueue=True, it will run when it is called in the protocol.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>                     <span class="c1"># causes robot to home immediately</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>         <span class="c1"># adds &quot;home&quot; command to protocol queue</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># adds &quot;home ab&quot; command to protocol queue</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># adds &quot;home xyz&quot; command to protocol queue</span>
 </pre></div>
 </div>
 </div>

@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -27,12 +28,13 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Opentrons API v2.0" href="index.html" />
     <link rel="next" title="Advanced Use Cases" href="tips_and_tricks.html" />
-    <link rel="prev" title="Using the App" href="running_app.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <link rel="prev" title="Using the App" href="running_app.html" /> 
+<script>
+  window.intercomSettings = {
+    app_id: "ukpodv2l"
+  };
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/ukpodv2l';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>    
 
   </head>
   <body role="document">
@@ -104,14 +106,14 @@
 <h2>Accessing Wells<a class="headerlink" href="#accessing-wells" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="coordinates">
 <h3>Coordinates<a class="headerlink" href="#coordinates" title="Permalink to this headline">¶</a></h3>
-<p>Wells can be called via their string [&#8216;A1&#8217;], or their well number [0].  In python, number ranges start with 0, and end at <strong>ask katie for better python description</strong></p>
+<p>Wells can be called via their string [&#8216;A1&#8217;], or their well number [0].  List indices in Python start with 0, so for a 96 well plate, the first well is at index 0 and last is at index 95.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">plate</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># A1</span>
 <span class="n">plate</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># B1</span>
 <span class="n">plate</span><span class="p">[</span><span class="mi">94</span><span class="p">]</span> <span class="c1"># G12</span>
 <span class="n">plate</span><span class="p">[</span><span class="mi">95</span><span class="p">]</span> <span class="c1"># H12</span>
 </pre></div>
 </div>
-<p>You can also split the coordinates for the rows and columns and use either .rows or .cols.</p>
+<p>You can also split the coordinates for the rows and columns and use either <code class="docutils literal"><span class="pre">.rows</span></code> or <code class="docutils literal"><span class="pre">.cols</span></code>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">plate</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># A1</span>
 <span class="n">plate</span><span class="o">.</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># A1</span>
 
@@ -151,7 +153,7 @@
 </div>
 <div class="section" id="iterating-wells">
 <h2>Iterating Wells<a class="headerlink" href="#iterating-wells" title="Permalink to this headline">¶</a></h2>
-<p>There are many wells to iterate through a plate, well by well, row by row, col by col, or skipping around.  We will show you examples of how to do all of these.</p>
+<p>There are many ways to iterate through a plate, well by well, row by row, col by col, or skipping around.  We will show you examples of how to do all of these.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p><strong>range</strong> (<em>start, stop, step</em>)</p>
@@ -194,7 +196,7 @@
 <h2>Other Examples<a class="headerlink" href="#other-examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="odds-evens">
 <h3>Odds &amp; Evens<a class="headerlink" href="#odds-evens" title="Permalink to this headline">¶</a></h3>
-<p>In order to access every other row, you can utilize the third parameter in range and add a step count to your loop.  A step of 2 skips every other number, giving you all the odds or all the evens (see below) depending on the start of your range.</p>
+<p>In order to access every other row, you can utilize the third parameter in <code class="docutils literal"><span class="pre">range()</span></code> and add a step-count to your loop.  A step-count of <code class="docutils literal"><span class="pre">2</span></code> will skip every other number, so calling <code class="docutils literal"><span class="pre">range(0,</span> <span class="pre">10,</span> <span class="pre">2)</span></code> will create <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">8]</span></code>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
     <span class="n">well</span> <span class="o">=</span> <span class="n">plate1</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="n">tip</span> <span class="o">=</span> <span class="n">p200rack</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -210,12 +212,11 @@
 </div>
 <div class="section" id="chaining">
 <h3>Chaining<a class="headerlink" href="#chaining" title="Permalink to this headline">¶</a></h3>
-<p>Skipping around multiple chains is easy, once you have the right tools.  There are some python functions that are not inherent to the API, but that can be imported to make your life easier.  You can import the chain function when you import the opentrons API at the start of your python notebook.
-<strong>ask katie for python import explanation</strong></p>
+<p>Skipping around multiple chains is easy, once you have the right tools.  There are some python functions that are not inherent to the API, but that can be imported to make your life easier.  You can import the chain function when you import the opentrons API at the start of your python notebook.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
 </pre></div>
 </div>
-<p>The chain functinos allows you to link two sets of locations together, in this case, two different columns.  The loop will iterate through all wells in column A and column E, while skipping columns BCDFGH.</p>
+<p>The chain function allows you to link two sets of locations together, in this case, two different columns.  The loop will iterate through all wells in column A and column E, while skipping columns BCDFGH.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dest_iter</span> <span class="o">=</span> <span class="n">chain</span><span class="p">(</span><span class="n">plate1</span><span class="o">.</span><span class="n">cols</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span> <span class="n">plate1</span><span class="o">.</span><span class="n">cols</span><span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">well</span> <span class="ow">in</span> <span class="n">trough</span><span class="p">[:</span><span class="mi">12</span><span class="p">]:</span>
