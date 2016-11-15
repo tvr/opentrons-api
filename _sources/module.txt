@@ -20,7 +20,7 @@ Just like a pipette, you need to set up and name your module.
 
 **instruments.Magbead** (*mofset, name*)
 
-	* **mosfet -** integer 0-5 (defaults to 0)
+	* **mofset -** default to =0
 	* **name -** the name you want to call your module
 
 .. testsetup:: main
@@ -31,12 +31,15 @@ Just like a pipette, you need to set up and name your module.
 
 .. testcode:: main
 
-	mag_deck = instruments.Magbead(name='mag_deck')
+	mag_deck = instruments.Magbead(
+		mosfet=0, 
+		name='mag_deck'
+	)
 
 Activate and Deactivate Magnets 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To activate the magnets and raise the module's platform, run ``.engage()``:
+To activate the magnets, use the following command
 
 **module.engage** ()
 
@@ -44,7 +47,7 @@ To activate the magnets and raise the module's platform, run ``.engage()``:
 
 	mag_deck.engage()
 
-To deactivate the magnets and lower the module's platform, run ``.disengage()``:
+To deactive the magnets, use the following command
 
 **module.disengage** ()
 
@@ -55,7 +58,7 @@ To deactivate the magnets and lower the module's platform, run ``.disengage()``:
 Chain Other Commands
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Just like ``aspirate()`` and ``dispense()`` can be chained, you can chain ``engage()`` and ``disengage()``, as well as the ``delay()`` if you don't want to do anything between engaging and disengaging the magnets.
+Just like aspirate() and dispense() can be chained, you can chain engage() and disengage(), as well as the delay() if you don't want to do anything between engaging and disengaging the magnets.
 
 .. testcode:: main
 
@@ -65,7 +68,7 @@ Just like ``aspirate()`` and ``dispense()`` can be chained, you can chain ``enga
 
 	mag_deck.engage().delay(60).disengage()
 
-You can call ``delay()`` with a ``Pipette`` or a ``Magbead`` module.
+You can call delay() with a pipette or a mag_deck module.
 
 .. testcode:: main
 
