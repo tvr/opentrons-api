@@ -103,25 +103,22 @@
 <p><strong>instruments.Magbead</strong> (<em>mofset, name</em>)</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>mofset -</strong> default to =0</li>
+<li><strong>mosfet -</strong> integer 0-5 (defaults to 0)</li>
 <li><strong>name -</strong> the name you want to call your module</li>
 </ul>
 </div></blockquote>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mag_deck</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Magbead</span><span class="p">(</span>
-        <span class="n">mosfet</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mag_deck&#39;</span>
-<span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mag_deck</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Magbead</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;mag_deck&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="activate-and-deactivate-magnets">
 <h3>Activate and Deactivate Magnets<a class="headerlink" href="#activate-and-deactivate-magnets" title="Permalink to this headline">¶</a></h3>
-<p>To activate the magnets, use the following command</p>
+<p>To activate the magnets and raise the module&#8217;s platform, run <code class="docutils literal"><span class="pre">.engage()</span></code>:</p>
 <p><strong>module.engage</strong> ()</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mag_deck</span><span class="o">.</span><span class="n">engage</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>To deactive the magnets, use the following command</p>
+<p>To deactivate the magnets and lower the module&#8217;s platform, run <code class="docutils literal"><span class="pre">.disengage()</span></code>:</p>
 <p><strong>module.disengage</strong> ()</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mag_deck</span><span class="o">.</span><span class="n">disengage</span><span class="p">()</span>
 </pre></div>
@@ -129,7 +126,7 @@
 </div>
 <div class="section" id="chain-other-commands">
 <h3>Chain Other Commands<a class="headerlink" href="#chain-other-commands" title="Permalink to this headline">¶</a></h3>
-<p>Just like aspirate() and dispense() can be chained, you can chain engage() and disengage(), as well as the delay() if you don&#8217;t want to do anything between engaging and disengaging the magnets.</p>
+<p>Just like <code class="docutils literal"><span class="pre">aspirate()</span></code> and <code class="docutils literal"><span class="pre">dispense()</span></code> can be chained, you can chain <code class="docutils literal"><span class="pre">engage()</span></code> and <code class="docutils literal"><span class="pre">disengage()</span></code>, as well as the <code class="docutils literal"><span class="pre">delay()</span></code> if you don&#8217;t want to do anything between engaging and disengaging the magnets.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mag_deck</span><span class="o">.</span><span class="n">engage</span><span class="p">()</span>
 <span class="n">mag_deck</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
 <span class="n">mag_deck</span><span class="o">.</span><span class="n">disengage</span><span class="p">()</span>
@@ -137,7 +134,7 @@
 <span class="n">mag_deck</span><span class="o">.</span><span class="n">engage</span><span class="p">()</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">disengage</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>You can call delay() with a pipette or a mag_deck module.</p>
+<p>You can call <code class="docutils literal"><span class="pre">delay()</span></code> with a <code class="docutils literal"><span class="pre">Pipette</span></code> or a <code class="docutils literal"><span class="pre">Magbead</span></code> module.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">mag_deck</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
