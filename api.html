@@ -109,6 +109,7 @@
 <li><a class="reference internal" href="#opentrons.Robot.run" title="opentrons.Robot.run"><code class="xref py py-meth docutils literal"><span class="pre">run()</span></code></a> the protocol on a robot</li>
 <li><a class="reference internal" href="#opentrons.Robot.home" title="opentrons.Robot.home"><code class="xref py py-meth docutils literal"><span class="pre">home()</span></code></a> axis, move head (<a class="reference internal" href="#opentrons.Robot.move_to" title="opentrons.Robot.move_to"><code class="xref py py-meth docutils literal"><span class="pre">move_to()</span></code></a>)</li>
 <li><a class="reference internal" href="#opentrons.Robot.pause" title="opentrons.Robot.pause"><code class="xref py py-meth docutils literal"><span class="pre">pause()</span></code></a> and <a class="reference internal" href="#opentrons.Robot.resume" title="opentrons.Robot.resume"><code class="xref py py-func docutils literal"><span class="pre">resume()</span></code></a> the protocol run</li>
+<li>set the <a class="reference internal" href="#opentrons.Robot.head_speed" title="opentrons.Robot.head_speed"><code class="xref py py-meth docutils literal"><span class="pre">head_speed()</span></code></a> of the robot</li>
 </ul>
 </dd>
 </dl>
@@ -305,6 +306,32 @@ the list of options to be passed to <code class="xref py py-func docutils litera
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="opentrons.Robot.head_speed">
+<code class="descname">head_speed</code><span class="sig-paren">(</span><em>rate</em><span class="sig-paren">)</span><a class="headerlink" href="#opentrons.Robot.head_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the XY axis speeds of the robot, set in millimeters per minute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rate</strong> (<em>int</em>) &#8211; An integer setting the mm/minute rate of the X and Y axis.
+Speeds too fast (around 6000 and higher) will cause the robot
+to skip step, be careful when using this method</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">opentrons</span> <span class="k">import</span> <span class="n">robot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;Virtual Smoothie&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">head_speed</span><span class="p">(</span><span class="mi">4500</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">robot</span><span class="o">.</span><span class="n">move_head</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

@@ -53,8 +53,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#import-opentrons-api">Import Opentrons API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deck-set-up">Deck Set Up</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#command-attributes">Command Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#homing">Homing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#head-speed">Head Speed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#move-to">Move To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#debugging-your-protocol">Debugging Your Protocol</a></li>
 </ul>
@@ -128,79 +128,67 @@
 </div>
 <div class="section" id="containers">
 <h3>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h3>
-<p>For each container you want to use on the deck, you need to load it into your file by telling the robot what it is, where it is, and what to label it. The label you give the container is what will appear in the app when you start calibrating.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mycontainer</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-        <span class="s1">&#39;container type&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;slot position&#39;</span>
-        <span class="s1">&#39;given name&#39;</span>
-<span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">plate</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;96-flat&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">,</span> <span class="s1">&#39;optional-unique-name&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Each container on the deck is loaded using the container&#8217;s name and assign it to a slot. The API comes packaged with a set of containers, and users can create and add their own custom containers.</p>
 <p><strong>containers.load</strong> (<em>container, slot, name</em>)</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>container -</strong> type of container (aka &#8220;trough-12row&#8221;)</li>
 <li><strong>slot -</strong> the slot location on the deck (&#8220;A1&#8221; through &#8220;E3&#8221;)</li>
-<li><strong>name -</strong> custom name, used inside API when saving calibration data</li>
+<li><strong>name -</strong> (optional) custom name, used inside API when saving calibration data</li>
 </ul>
 </div></blockquote>
-<p>The example below declares 3 different containers and assigns them to the appropriate slots on the deck.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tiprack</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-        <span class="s1">&#39;tiprack-200ul&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;A1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;tiprack&#39;</span>
-<span class="p">)</span>
-
-<span class="n">plate</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-        <span class="s1">&#39;96-PCR-flat&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;B2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;plate&#39;</span>
-<span class="p">)</span>
-
-<span class="n">trash</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-        <span class="s1">&#39;point&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;C3&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;trash&#39;</span>
-<span class="p">)</span>
+<p>The robot will save calibrated container coordinates from old runs based on the <code class="docutils literal"><span class="pre">container</span></code> and <code class="docutils literal"><span class="pre">slot</span></code> combination. Therefore, if you repeatedly place the same container type in the same slot, the robot will assume your old calibrated coordinates for that container.</p>
+<p>However, if you include the optional third argument <code class="docutils literal"><span class="pre">name</span></code>, the robot will assume coordinates based off the <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">slot</span></code> combination. This allows a container to differentiate it&#8217;s saved coordinates from previous protocols.</p>
+<p>The example below declares 3 different containers and assigns them to the appropriate slots on the deck. The trash uses a custom name, so that it doesn not inherit the coordinates of previous &#8220;point&#8221; containers at slot &#8220;C3&#8221;.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tiprack</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;tiprack-200ul&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">)</span>
+<span class="n">plate</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;96-PCR-flat&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">)</span>
+<span class="n">trash</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;point&#39;</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span><span class="p">,</span> <span class="s1">&#39;my-weird-trash-container&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The robot will save calibration data from old runs based on the container type, slot position and given name.  Thus, if you always give something the same arguments, it will populate the app with old calibration data.  If you do not want it to do this, simply change the given name to unique names.</p>
 </div>
 <div class="section" id="pipettes">
 <h3>Pipettes<a class="headerlink" href="#pipettes" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mypipette</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mypipette&quot;</span><span class="p">,</span>
         <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span>
         <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
         <span class="n">min_volume</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-        <span class="n">trash_container</span><span class="o">=</span><span class="n">trash</span><span class="p">,</span>
         <span class="n">tip_racks</span><span class="o">=</span><span class="p">[</span><span class="n">tiprack</span><span class="p">],</span>
-        <span class="n">channels</span><span class="o">=</span><span class="mi">1</span>
+        <span class="n">trash_container</span><span class="o">=</span><span class="n">trash</span><span class="p">,</span>
+        <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mypipette&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>instruments.Pipette</strong> (<em>name, trash_container, tip_racks, min_volume, max_volume, axis, channels</em>)</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>name -</strong> name you give pipette</li>
 <li><strong>axis -</strong> axis the pipette is on (a or b)</li>
 <li><strong>max_volume -</strong> maximum volume of pipette</li>
-<li><strong>min_volume -</strong> minimum volume of pipette</li>
-<li><strong>trash_container -</strong> given name of container where you want to deposit tips</li>
-<li><strong>tip_racks -</strong> array (list) of container(s) where you want to pick up tips</li>
-<li><strong>channels -</strong> number of channels (1 or 8)</li>
+<li><strong>min_volume -</strong> (optional) minimum volume of pipette</li>
+<li><strong>tip_racks -</strong> (optional) array (list) of container(s) where you want to pick up tips</li>
+<li><strong>trash_container -</strong> (optional) given name of container where you want to deposit tips</li>
+<li><strong>channels -</strong> (optional) number of channels (1 or 8)</li>
+<li><strong>name -</strong> (optional) name you give pipette</li>
 </ul>
 </div></blockquote>
-<p>This example loads a single channel, 20-200 uL pipette on the <code class="docutils literal"><span class="pre">b</span></code> axis that pulls tips from tiprack and deposits them in trash</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pipette</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;p200&quot;</span><span class="p">,</span>
-        <span class="n">trash_container</span><span class="o">=</span><span class="n">trash</span><span class="p">,</span>
-        <span class="n">tip_racks</span><span class="o">=</span><span class="p">[</span><span class="n">tiprack</span><span class="p">],</span>
-        <span class="n">min_volume</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-        <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+<p>To use the tip-tracking features, create your pipette with tip racks and a trash container like the following example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mypipette</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span>
         <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span>
-        <span class="n">channels</span><span class="o">=</span><span class="mi">1</span>
+        <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">tip_racks</span><span class="o">=</span><span class="p">[</span><span class="n">tiprack</span><span class="p">],</span>
+        <span class="n">trash_container</span><span class="o">=</span><span class="n">trash</span>
 <span class="p">)</span>
+
+<span class="n">mypipette</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>     <span class="c1"># picks up tip at A1</span>
+<span class="n">mypipette</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">()</span>            <span class="c1"># drops tip in the trash container</span>
+<span class="n">mypipette</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>     <span class="c1"># picks up tip at B1</span>
+<span class="n">mypipette</span><span class="o">.</span><span class="n">return_tip</span><span class="p">()</span>      <span class="c1"># drops tip back at B1</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -214,28 +202,40 @@
 <p><strong>pipette.pick_up_tip</strong> (<em>location</em>)</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>location -</strong> container[position] location to pick up tip</li>
+<li><strong>location -</strong> container[position] the tip&#8217;s current position</li>
 </ul>
 </div></blockquote>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;A2&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>However, if you just want to go through the tips in a tip rack in order, there is no need to call a location. The example below will pick up the first available tip, and the API will keep track of which tips have been used so far in the protocol.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>In addition to picking up a tip, there is a command to drop tip.</p>
 <p><strong>pipette.drop_tip</strong> (<em>location</em>)</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>location -</strong> container[position] location to drop tip</li>
+<li><strong>location -</strong> container[position] the position to drop the tip</li>
 </ul>
 </div></blockquote>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;A2&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>While you can only pick up tips from tip racks, you can eject tips back into the tiprack, or send them to the trash.  While you can specify trash as a location, you can also use the default version of drop tip like the example below.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">()</span>
+<p>The behavior or tip commands changes depending on whether you have attached tip racks and/or trash containers to your pipette.
+This happens when a pipette is created through using it&#8217;s <code class="docutils literal"><span class="pre">tip_racks</span></code> and <code class="docutils literal"><span class="pre">trash</span></code> properties.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span>
+    <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">tip_racks</span><span class="o">=</span><span class="p">[</span><span class="n">tiprack</span><span class="p">],</span>
+    <span class="n">trash</span><span class="o">=</span><span class="n">trash</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With a list of one or more tip racks, a pipette can automatically iterate through it&#8217;s tips without passing any arguments, and automatically drop tips in the trash.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>      <span class="c1"># automatically goes to tiprack[&#39;A1&#39;]</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">()</span>         <span class="c1"># automatically goes to trash</span>
+</pre></div>
+</div>
+<p><strong>pipette.return_tip</strong> ()</p>
+<p>With one or more tip racks attached, a pipette can also return a tip to it&#8217;s original position</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>      <span class="c1"># automatically goes to tiprack[&#39;A1&#39;]</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">return_tip</span><span class="p">()</span>       <span class="c1"># automatically goes back to tiprack[&#39;A1&#39;]</span>
 </pre></div>
 </div>
 </div>
@@ -249,10 +249,19 @@
 </ul>
 </div></blockquote>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>You can link multiple aspirates together in order to pick up liquid from multiple locations</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>If no volume is passed, the pipette will automatically aspirate to it&#8217;s <code class="docutils literal"><span class="pre">max_volume</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>              <span class="c1"># 200ul</span>
+</pre></div>
+</div>
+<p>In addition, if no location is passed, the pipette will aspirate from it&#8217;s current position</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">()</span>                         <span class="c1"># 200ul from this position</span>
 </pre></div>
 </div>
 </div>
@@ -270,8 +279,7 @@
 </pre></div>
 </div>
 <p>If you want to deposit all of the liquid you just aspirated, there is no need to specify volume in the dispense command.  It will default to the entire volume in the pipette.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -289,10 +297,14 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
+<p>Call <code class="docutils literal"><span class="pre">mix()</span></code> without a location, and the pipette will mix at the previously referenced well</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="chaining-commands">
 <h3>Chaining Commands<a class="headerlink" href="#chaining-commands" title="Permalink to this headline">¶</a></h3>
-<p>Now that you know the basic commands, you can start transferring liquids!  However, your code can get lengthy quickly is you write it like this.</p>
+<p>Now that you know the basic commands, you can start transferring liquids!  However, your code can get lengthy quickly if you write it like this.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>
 <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
 <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A2&#39;</span><span class="p">])</span>
@@ -306,10 +318,6 @@
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="command-attributes">
-<h2>Command Attributes<a class="headerlink" href="#command-attributes" title="Permalink to this headline">¶</a></h2>
-<p>In addition to commands, you can attach attributes to your movements.</p>
 <div class="section" id="touch-tip">
 <h3>Touch Tip<a class="headerlink" href="#touch-tip" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes you want to touch the tip of the pipette to the sides of the well.  You can link this to one of the commands you just learned.</p>
@@ -333,7 +341,7 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If the trash container is given a &#8220;point&#8221; labware name, instead of another container (like &#8220;trough-12row&#8221;), there is no need to call a position within the container.</p>
+<p class="last">Since the trash container is given a &#8220;point&#8221; labware name, it has no wells inside it. Therefore there is no need to call a position within the container.</p>
 </div>
 </div>
 <div class="section" id="delay">
@@ -345,24 +353,31 @@
 <li><strong>time -</strong> duration of delay (seconds)</li>
 </ul>
 </div></blockquote>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="dispensing-positions">
-<h3>Dispensing Positions<a class="headerlink" href="#dispensing-positions" title="Permalink to this headline">¶</a></h3>
-<p>Want to deposit at the top of a tube?  Pull liquid from the bottom of the well?  Mix from the middle?  Easy.</p>
+<div class="section" id="position-within-a-well">
+<h3>Position Within a Well<a class="headerlink" href="#position-within-a-well" title="Permalink to this headline">¶</a></h3>
+<p>Want to deposit at the top of a tube?  Pull liquid from the bottom of the well?  It&#8217;s easy with a Well&#8217;s <code class="docutils literal"><span class="pre">top()</span></code> and <code class="docutils literal"><span class="pre">bottom()</span></code> methods.</p>
 <p><strong>container.top</strong> (<em>distance</em>)</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>distance -</strong> (optional) distance above/below top of Well (mm)</li>
+</ul>
+</div></blockquote>
 <p><strong>container.bottom</strong> (<em>distance</em>)</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>distance -</strong> distance from calibration position (mm)</li>
+<li><strong>distance -</strong> (optional) distance above bottom of Well (mm)</li>
 </ul>
 </div></blockquote>
-<p>Containers are calibrated to the bottom of the well, and each labware definition has an inherent depth, which provides the calculated top position.  You can specify each of these locations anytime you use a container[position], as well as adjust them up (+) or down (-) by adding a distance.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">())</span>         <span class="c1"># at the top of well</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bottom</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 5mm above bottom of well</span>
-<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>       <span class="c1"># 3mm below top of well</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">well</span> <span class="o">=</span> <span class="n">plate</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">]</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">well</span><span class="o">.</span><span class="n">top</span><span class="p">())</span>         <span class="c1"># at the top of well</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">well</span><span class="o">.</span><span class="n">bottom</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 5mm above bottom of well</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">well</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>       <span class="c1"># 3mm below top of well</span>
 </pre></div>
 </div>
 </div>
@@ -377,11 +392,30 @@
 <li><strong>enqueue -</strong> True or False</li>
 </ul>
 </div></blockquote>
-<p>When the python file is loaded into the protocol, it runs through all of the commands.  When enqueue=False (default), this will cause the robot to home immediately upon loading the protocol, whereas if enqueue=True, it will run when it is called in the protocol.</p>
+<p>Normally, home commands are run immediately when called, and therefore should not be included in a protocol. However, if you need to home during a protocol run, include the argument <code class="docutils literal"><span class="pre">enqueue=True</span></code>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>                     <span class="c1"># causes robot to home immediately</span>
 <span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>         <span class="c1"># adds &quot;home&quot; command to protocol queue</span>
 <span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># adds &quot;home ab&quot; command to protocol queue</span>
 <span class="n">robot</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># adds &quot;home xyz&quot; command to protocol queue</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="head-speed">
+<h2>Head Speed<a class="headerlink" href="#head-speed" title="Permalink to this headline">¶</a></h2>
+<p>The speed of the robot&#8217;s X and Y movements can be sped up or slowed down.</p>
+<p><strong>robot.head_speed</strong> (<em>rate</em>)</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>rate -</strong> the speed at which the X and Y axis will move (millimeters per minute)</li>
+</ul>
+</div></blockquote>
+<p>This method will immediately set the speed of the robot, and all following movements will use that speed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Speeds too fast (around 6000 and higher) will cause the robot to skip step, be careful when using this method</p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">robot</span><span class="o">.</span><span class="n">head_speed</span><span class="p">(</span><span class="mi">4500</span><span class="p">)</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

@@ -97,21 +97,23 @@
   <div class="section" id="advanced-use-cases">
 <span id="tips-and-tricks"></span><h1>Advanced Use Cases<a class="headerlink" href="#advanced-use-cases" title="Permalink to this headline">¶</a></h1>
 <p>The following examples assume the containers and pipettes:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">opentrons</span> <span class="k">import</span> <span class="n">robot</span>
-<span class="kn">from</span> <span class="nn">opentrons</span> <span class="k">import</span> <span class="n">containers</span><span class="p">,</span> <span class="n">instruments</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">opentrons</span> <span class="k">import</span> <span class="n">robot</span><span class="p">,</span> <span class="n">containers</span><span class="p">,</span> <span class="n">instruments</span>
 
 <span class="n">tiprack</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;tiprack-200ul&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">)</span>
 <span class="n">plate</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;96-flat&#39;</span><span class="p">,</span> <span class="s1">&#39;B1&#39;</span><span class="p">)</span>
 <span class="n">trough</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;trough-12row&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">)</span>
 <span class="n">trash</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;point&#39;</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span><span class="p">)</span>
 
-<span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">p200</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">Pipette</span><span class="p">(</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span>
+    <span class="n">max_volume</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">tip_racks</span><span class="o">=</span><span class="p">[</span><span class="n">tiprack</span><span class="p">])</span>
 </pre></div>
 </div>
 <div class="section" id="automatically-refill-volume">
 <h2>Automatically Refill Volume<a class="headerlink" href="#automatically-refill-volume" title="Permalink to this headline">¶</a></h2>
 <p>Want to deposit liquid to an entire plate, but don&#8217;t want to have to tell the robot when to pick up more liquid?  This example will keep track of the volume in the pipette and automatically picks up more liquid when there isn&#8217;t enough for the next dispense.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>
 
 <span class="n">dispense_volume</span> <span class="o">=</span> <span class="mi">13</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">96</span><span class="p">):</span>
@@ -119,7 +121,7 @@
         <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">trough</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
     <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">dispense_volume</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">touch_tip</span><span class="p">()</span>
 
-<span class="n">p200</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">trash</span><span class="p">)</span>
+<span class="n">p200</span><span class="o">.</span><span class="n">blow_out</span><span class="p">(</span><span class="n">trough</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">trash</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -161,22 +163,14 @@
     <span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;water&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>
 <span class="p">}</span>
 
-<span class="n">robot</span><span class="o">.</span><span class="n">clear_commands</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">source_well</span><span class="p">,</span> <span class="n">ingredient</span> <span class="ow">in</span> <span class="n">sources</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="c1"># each ingredient has it&#39;s own tip</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="n">source_well</span><span class="p">])</span>
-    <span class="c1"># loop through all destination wells</span>
+<span class="k">for</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">ingredient</span> <span class="ow">in</span> <span class="n">sources</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">p200</span><span class="o">.</span><span class="n">pick_up_tip</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">destination_well</span><span class="p">,</span> <span class="n">mapping</span> <span class="ow">in</span> <span class="n">destinations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">dispense_volume</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">ingredient</span><span class="p">]</span>
-        <span class="c1"># refill this tip if it&#39;s empty</span>
         <span class="k">if</span> <span class="n">p200</span><span class="o">.</span><span class="n">current_volume</span> <span class="o">&lt;</span> <span class="n">dispense_volume</span><span class="p">:</span>
-           <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">trough</span><span class="p">[</span><span class="n">source_well</span><span class="p">])</span>
+           <span class="n">p200</span><span class="o">.</span><span class="n">aspirate</span><span class="p">(</span><span class="n">trough</span><span class="p">[</span><span class="n">source_name</span><span class="p">])</span>
         <span class="n">p200</span><span class="o">.</span><span class="n">dispense</span><span class="p">(</span><span class="n">dispense_volume</span><span class="p">,</span> <span class="n">plate</span><span class="p">[</span><span class="n">destination_well</span><span class="p">])</span>
-    <span class="c1"># blow out the extra liquid, then save the tip</span>
-    <span class="n">p200</span><span class="o">.</span><span class="n">blow_out</span><span class="p">(</span><span class="n">trash</span><span class="p">)</span><span class="o">.</span><span class="n">drop_tip</span><span class="p">(</span><span class="n">tiprack</span><span class="p">[</span><span class="n">source_well</span><span class="p">])</span>
-
-<span class="n">robot</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+    <span class="n">p200</span><span class="o">.</span><span class="n">blow_out</span><span class="p">(</span><span class="n">trough</span><span class="p">[</span><span class="n">source_name</span><span class="p">])</span><span class="o">.</span><span class="n">return_tip</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
