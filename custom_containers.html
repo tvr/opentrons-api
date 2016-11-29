@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Custom Containers &#8212; Opentrons API v2.0</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Opentrons API v2.0" href="index.html" />
+    <link rel="next" title="Modules" href="module.html" />
+    <link rel="prev" title="Advanced Use Cases" href="tips_and_tricks.html" /> 
+<script>
+  window.intercomSettings = {
+    app_id: "ukpodv2l"
+  };
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/ukpodv2l';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>    
+
+  </head>
+  <body role="document">
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="updating_firmware.html">Updating Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Code Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Writing a Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="well_access.html">Container Well Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_app.html">Using the App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Advanced Use Cases</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Developer Interface</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tips_and_tricks.html" title="previous chapter">Advanced Use Cases</a></li>
+      <li>Next: <a href="module.html" title="next chapter">Modules</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/custom_containers.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="custom-containers">
+<span id="id1"></span><h1>Custom Containers<a class="headerlink" href="#custom-containers" title="Permalink to this headline">¶</a></h1>
+<p>To create a custom container, you need to create a JSON file that defines the shape of the container.
+Here is an example of a custom container that represents a plate with only 3 circular wells.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;containers&quot;</span> <span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;tuberack-custom&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;locations&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;A1&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;x&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;y&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;z&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;depth&quot;</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+          <span class="s2">&quot;diameter&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+          <span class="s2">&quot;total-liquid-volume&quot;</span><span class="o">:</span> <span class="mi">500</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;B1&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;x&quot;</span><span class="o">:</span> <span class="mi">20</span><span class="p">,</span>
+          <span class="s2">&quot;y&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;z&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;depth&quot;</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+          <span class="s2">&quot;diameter&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+          <span class="s2">&quot;total-liquid-volume&quot;</span><span class="o">:</span> <span class="mi">500</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;C1&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;x&quot;</span><span class="o">:</span> <span class="mi">40</span><span class="p">,</span>
+          <span class="s2">&quot;y&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;z&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;depth&quot;</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+          <span class="s2">&quot;diameter&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+          <span class="s2">&quot;total-liquid-volume&quot;</span><span class="o">:</span> <span class="mi">500</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The first key, &#8220;containers&#8221;, is required in every container file. The next key, &#8220;tuberack-custom&#8221;, is the name of your custom container.
+Inside &#8220;locations&#8221; you can define the x, y, z, depth, diameter, and total-liquid-volume (a volume tracking feature is coming soon).</p>
+<p>If you would like to create a container with rectangular wells, simple replace the &#8220;diameter&#8221; attribute with a &#8220;length&#8221; and &#8220;width&#8221; attribute, like so:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;containers&quot;</span> <span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;trash-square&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;locations&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;A1&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;x&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;y&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;z&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;depth&quot;</span><span class="o">:</span> <span class="mi">35</span><span class="p">,</span>
+          <span class="s2">&quot;diameter&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+          <span class="s2">&quot;total-liquid-volume&quot;</span><span class="o">:</span> <span class="mi">500</span>
+        <span class="p">},</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In addition, you can include any number of custom containers in a container file - simply add more containers as values of the &#8220;containers&#8221; key. For example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;containers&quot;</span> <span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;trash-square&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;locations&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;A1&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;x&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;y&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;z&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s2">&quot;depth&quot;</span><span class="o">:</span> <span class="mi">35</span><span class="p">,</span>
+          <span class="s2">&quot;diameter&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+          <span class="s2">&quot;total-liquid-volume&quot;</span><span class="o">:</span> <span class="mi">500</span>
+        <span class="p">},</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;trash-square&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;locations&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;A1&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;x&quot;</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+          <span class="s2">&quot;y&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+          <span class="s2">&quot;z&quot;</span><span class="o">:</span> <span class="mi">15</span><span class="p">,</span>
+          <span class="s2">&quot;depth&quot;</span><span class="o">:</span> <span class="mi">40</span><span class="p">,</span>
+          <span class="s2">&quot;length&quot;</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+          <span class="s2">&quot;width&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+          <span class="s2">&quot;total-liquid-volume&quot;</span><span class="o">:</span> <span class="mi">538</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Lastly, to load a custom container into your app, click &#8220;File&#8221; and then &#8220;Open Containers Folder&#8221;. Then, drag or copy and paste in the custom container file you wrote in order to access it through a Python or JSON protocol.</p>
+<p>Here is an example of loading into a Python protocol the custom trash container that I defined above.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">opentrons</span> <span class="kn">import</span> <span class="n">containers</span>
+
+<span class="n">custom_trash</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+    <span class="s1">&#39;trash-square&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;B2&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2016, Opentrons.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/custom_containers.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-83820700-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>
