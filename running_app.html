@@ -101,6 +101,15 @@
 <div class="section" id="download-app">
 <h2>Download App<a class="headerlink" href="#download-app" title="Permalink to this headline">¶</a></h2>
 <p>You can download the latest version of the app from <a class="reference external" href="https://opentrons.com/getting-started/download-app">our website</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If running on Linux:
+The user will need to be given permissions to open the robot&#8217;s serial port. In a terminal window, run the following command.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo usermod -a -G dialout <span class="nv">$USER</span>
+</pre></div>
+</div>
+<p class="last">Then logout and log back in as the user to activate the change.</p>
+</div>
 </div>
 <div class="section" id="connect-to-robot">
 <h2>Connect to Robot<a class="headerlink" href="#connect-to-robot" title="Permalink to this headline">¶</a></h2>
