@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Labware Library &#8212; Opentrons API v2.0</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Opentrons API v2.0" href="index.html" />
+    <link rel="next" title="Custom Containers" href="custom_containers.html" />
+    <link rel="prev" title="Container Well Access" href="well_access.html" /> 
+<script>
+  window.intercomSettings = {
+    app_id: "ukpodv2l"
+  };
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/ukpodv2l';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>    
+
+  </head>
+  <body role="document">
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="updating_firmware.html">Updating Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Code Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Writing a Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="well_access.html">Container Well Access</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Labware Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#points">Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tipracks">Tipracks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troughs">Troughs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tube-racks">Tube Racks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plates">Plates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_containers.html">Custom Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_app.html">Using the App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Advanced Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Developer Interface</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="well_access.html" title="previous chapter">Container Well Access</a></li>
+      <li>Next: <a href="custom_containers.html" title="next chapter">Custom Containers</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/labware_library.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="labware-library">
+<span id="id1"></span><h1>Labware Library<a class="headerlink" href="#labware-library" title="Permalink to this headline">¶</a></h1>
+<p>Please refer to this detailed tutorial on <a class="reference internal" href="well_access.html#well-access"><span class="std std-ref">Container Well Access</span></a> to learn the various ways you can access tips, wells, rows, and columns within supported labware.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note:  All names are case-sensitive, copying and pasting from this list into the protocol editor will ensure no errors are made.</p>
+</div>
+<div class="section" id="points">
+<h2>Points<a class="headerlink" href="#points" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="point">
+<h3>point<a class="headerlink" href="#point" title="Permalink to this headline">¶</a></h3>
+<p>Use <code class="docutils literal"><span class="pre">point</span></code> when there is only one position per container, such as the trash or a scale.</p>
+<p>You can access the point position as <code class="docutils literal"><span class="pre">container[0]</span></code> or <code class="docutils literal"><span class="pre">container['A1']</span></code>.</p>
+</div>
+</div>
+<div class="section" id="tipracks">
+<h2>Tipracks<a class="headerlink" href="#tipracks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tiprack-10ul">
+<h3>tiprack-10ul<a class="headerlink" href="#tiprack-10ul" title="Permalink to this headline">¶</a></h3>
+<p>Tip rack for a 10 uL pipette (single or 8-channel)</p>
+<p><strong>Accessing Tips:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘H12’]</span></code>, <em>8-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A12’]</span></code></p>
+<img alt="_images/Tiprack-10ul.png" src="_images/Tiprack-10ul.png" />
+</div>
+<div class="section" id="tiprack-10ul-h">
+<h3>tiprack-10ul-H<a class="headerlink" href="#tiprack-10ul-h" title="Permalink to this headline">¶</a></h3>
+<p>Tip rack for a single channel 10 uL pipette when the pipette is in the center position.  Set initial position to H1, and the pipette will use all the tips on the right hand side (E-H, 1-12)</p>
+<p><strong>Accessing Tips:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘E-H,</span> <span class="pre">1-12’]</span></code></p>
+<img alt="_images/Tiprack-10ul-H.png" src="_images/Tiprack-10ul-H.png" />
+</div>
+<div class="section" id="tiprack-200ul">
+<h3>tiprack-200ul<a class="headerlink" href="#tiprack-200ul" title="Permalink to this headline">¶</a></h3>
+<p>Tip rack for a 200 or 300 uL pipette (single or 8-channel)</p>
+<p><strong>Accessing Tips:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘H12’]</span></code>, <em>8-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A12’]</span></code></p>
+<img alt="_images/Tiprack-200ul.png" src="_images/Tiprack-200ul.png" />
+</div>
+<div class="section" id="tiprack-1000ul">
+<h3>tiprack-1000ul<a class="headerlink" href="#tiprack-1000ul" title="Permalink to this headline">¶</a></h3>
+<p>Tip rack for a 1000 uL pipette (single or 8-channel)</p>
+<p><strong>Accessing Tips:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘H12’]</span></code>, <em>8-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A12’]</span></code></p>
+<img alt="_images/Tiprack-1000.png" src="_images/Tiprack-1000.png" />
+</div>
+<div class="section" id="tiprack-1000ul-chem">
+<h3>tiprack-1000ul-chem<a class="headerlink" href="#tiprack-1000ul-chem" title="Permalink to this headline">¶</a></h3>
+<p>Tip rack for 1000ul chem (10x10)</p>
+<p><strong>Accessing Tips:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[0]-[99]</span></code></p>
+<img alt="_images/Tiprack-1000ul-chem.png" src="_images/Tiprack-1000ul-chem.png" />
+</div>
+</div>
+<div class="section" id="troughs">
+<h2>Troughs<a class="headerlink" href="#troughs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="trough-12row">
+<h3>trough-12row<a class="headerlink" href="#trough-12row" title="Permalink to this headline">¶</a></h3>
+<p>12 row reservoir</p>
+<p><strong>Accessing Rows:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A12’]</span></code>, <em>8-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A12’]</span></code></p>
+<img alt="_images/Trough-12row.png" src="_images/Trough-12row.png" />
+</div>
+</div>
+<div class="section" id="tube-racks">
+<h2>Tube Racks<a class="headerlink" href="#tube-racks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tube-rack-75ml">
+<h3>tube-rack-.75ml<a class="headerlink" href="#tube-rack-75ml" title="Permalink to this headline">¶</a></h3>
+<p>4x6 rack that holds .75 mL microcentrifuge tubes
+(A1, A1-D6)</p>
+<p><strong>Accessing Tubes:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘D6’]</span></code></p>
+<p>..image:: img/labware_lib/Tuberack-0.75ml.png</p>
+</div>
+<div class="section" id="tube-rack-2ml">
+<h3>tube-rack-2ml<a class="headerlink" href="#tube-rack-2ml" title="Permalink to this headline">¶</a></h3>
+<p>4x6 rack that holds 1.5 mL microcentrifuge tubes and 2 mL microcentrifuge tubes</p>
+<p><strong>Accessing Tubes:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘D6’]</span></code></p>
+<img alt="_images/Tuberack-2ml.png" src="_images/Tuberack-2ml.png" />
+</div>
+<div class="section" id="tube-rack-15-50ml">
+<h3>tube-rack-15_50ml<a class="headerlink" href="#tube-rack-15-50ml" title="Permalink to this headline">¶</a></h3>
+<p>rack that holds 6 15 mL tubes and 4 50 mL tubes</p>
+<p><strong>Accessing Tubes:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A3’],</span> <span class="pre">[‘B1’]-[‘B3’],</span> <span class="pre">[‘C1’]-[‘C2’],</span> <span class="pre">[‘D1’]-[‘D2’]</span></code></p>
+<p>..image:: img/labware_lib/Tuberack-15-50ml.png</p>
+</div>
+</div>
+<div class="section" id="plates">
+<h2>Plates<a class="headerlink" href="#plates" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="deep-well">
+<h3>96-deep-well<a class="headerlink" href="#deep-well" title="Permalink to this headline">¶</a></h3>
+<p>See dimensions in diagram below.</p>
+<p><strong>Accessing Wells:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘H12’]</span></code>, <em>8-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A12’]</span></code></p>
+<img alt="_images/96-Deep-Well.png" src="_images/96-Deep-Well.png" />
+</div>
+<div class="section" id="pcr-tall">
+<h3>96-PCR-tall<a class="headerlink" href="#pcr-tall" title="Permalink to this headline">¶</a></h3>
+<p>See dimensions in diagram below.</p>
+<p><strong>Accessing Wells:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘H12’]</span></code>, <em>8-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A12’]</span></code></p>
+<img alt="_images/96-PCR-Tall.png" src="_images/96-PCR-Tall.png" />
+</div>
+<div class="section" id="pcr-flat">
+<h3>96-PCR-flat<a class="headerlink" href="#pcr-flat" title="Permalink to this headline">¶</a></h3>
+<p>See dimensions in diagram below.</p>
+<p><strong>Accessing Wells:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘H12’]</span></code>, <em>8-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A12’]</span></code></p>
+<img alt="_images/96-PCR-Flatt.png" src="_images/96-PCR-Flatt.png" />
+</div>
+<div class="section" id="pcr-strip-tall">
+<h3>PCR-strip-tall<a class="headerlink" href="#pcr-strip-tall" title="Permalink to this headline">¶</a></h3>
+<p>See dimensions in diagram below.</p>
+<p><strong>Accessing Wells:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘A8’]</span></code>, <em>8-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]</span></code></p>
+<img alt="_images/96-PCR-Strip.png" src="_images/96-PCR-Strip.png" />
+</div>
+<div class="section" id="plate">
+<h3>384-plate<a class="headerlink" href="#plate" title="Permalink to this headline">¶</a></h3>
+<p>See dimensions in diagram below.</p>
+<p><strong>Accessing Wells:</strong> <em>single channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-[‘P24’]</span></code>, <em>multi-channel</em> <code class="docutils literal"><span class="pre">[‘A1’]-['A24]</span></code></p>
+<img alt="_images/384-plate.png" src="_images/384-plate.png" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2016, Opentrons.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/labware_library.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-83820700-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>
