@@ -105,11 +105,18 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>If running on Linux:
-The user will need to be given permissions to open the robot&#8217;s serial port. In a terminal window, run the following command.</p>
+The user will need to be given permissions to open the robot&#8217;s serial port. This requires <cite>sudo</cite> privileges.
+In a terminal window, run the following command</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>sudo usermod -a -G dialout <span class="nv">$USER</span>
 </pre></div>
 </div>
-<p class="last">Then logout and log back in as the user to activate the change.</p>
+<p>If you are running this command from an administrative account that will not be running the app (in order to get <cite>sudo</cite> privileges),
+replace $USER with the username of the account that will be running the app (this username can be found by typing</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="nv">$USER</span>
+</pre></div>
+</div>
+<p>in the account that will be running the app.</p>
+<p class="last">Finally, logout and log back in as the user to activate the change.</p>
 </div>
 </div>
 <div class="section" id="connect-to-robot">
