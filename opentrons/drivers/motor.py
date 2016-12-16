@@ -186,7 +186,8 @@ class CNCDriver(object):
             # ignore Smoothie's local storage if linux (temporary work-around)
             self.ignore_smoothie_sd = True
         elif sys.platform.startswith('darwin'):
-            ports = glob.glob('/dev/tty.*')
+            ports = glob.glob('/dev/tty.*') or []
+            ports.extend(glob.glob('/dev/cu.usbmodem*'))
         else:
             raise EnvironmentError('Unsupported platform')
 
