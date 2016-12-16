@@ -187,7 +187,7 @@ class CNCDriver(object):
             self.ignore_smoothie_sd = True
         elif sys.platform.startswith('darwin'):
             ports = glob.glob('/dev/tty.*') or []
-            ports.extend(glob.glob('/dev/cu.usbmodem*'))
+            ports.extend(glob.glob('/dev/cu.usbmodem*') or [])
         else:
             raise EnvironmentError('Unsupported platform')
 
