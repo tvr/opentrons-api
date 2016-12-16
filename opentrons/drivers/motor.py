@@ -135,7 +135,7 @@ class CNCDriver(object):
 
     def _apply_settings(self):
         self.serial_timeout = float(
-            self.saved_settings['serial'].get('timeout', 0.1))
+            self.saved_settings['serial'].get('timeout', 60))
         self.serial_baudrate = int(
             self.saved_settings['serial'].get('baudrate', 115200))
 
@@ -308,7 +308,7 @@ class CNCDriver(object):
             log.error(msg)
             raise RuntimeError(msg)
 
-    def wait_for_response(self, timeout=20.0):
+    def wait_for_response(self, timeout=60.0):
         """
         Repeatedly reads from serial port until data is received,
         or timeout is exceeded
