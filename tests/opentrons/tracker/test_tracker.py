@@ -1,0 +1,184 @@
+import pytest
+from opentrons.tracker import tracker
+
+
+@pytest.fixture
+def liquids():
+    state = {
+        'trough': {
+            'A1': {
+                'red': 1000
+            },
+            'A2': {
+                'green': 1000
+            },
+            'A3': {
+                'blue': 1000
+            }
+        },
+        'plate': {
+            'A1': {
+                'red': 100,
+                'green': 100,
+                'blue': 100
+            }
+        }
+    }
+
+    return state
+
+
+def test_total_volume():
+    state = {
+        'red': 100,
+        'green': 30,
+        'blue': 20
+    }
+    assert tracker.total_volume(state) == 150
+
+
+def test_substract():
+    state = {
+        'red': 100,
+        'green': 100,
+        'blue': 100
+    }
+
+    new_state, volume = tracker.substract(state, 30)
+    assert new_state == {
+        'red': 90,
+        'green': 90,
+        'blue': 90
+    }
+    assert volume == {
+        'red': 10,
+        'green': 10,
+        'blue': 10
+    }
+
+
+def test_add():
+    state_1 = {
+        'red': 100,
+        'green': 100
+    }
+
+    state_2 = {
+        'red': 10,
+        'green': 10,
+        'blue': 100
+    }
+
+    res = tracker.add(state_1, state_2)
+    assert res == {
+        'red': 110,
+        'green': 110,
+        'blue': 100
+    }
+
+
+def test_aspirate(liquids):
+    state = tracker.aspirate(liquids, 100, 'p200', ('trough', 'A1'))
+
+    assert state['p200'] == {
+        'red': 100
+    }
+    assert state['trough'] == {
+        'A1': {
+            'red': 900
+        },
+        'A2': {
+            'green': 1000
+        },
+        'A3': {
+            'blue': 1000
+        }
+    }
+
+
+def test_aspirate_dispense(liquids):
+    state = tracker.aspirate(liquids, 100, 'p200', ('trough', 'A1'))
+    state = tracker.dispense(state, 50, 'p200', ('plate', 'A1'))
+
+    assert state['p200'] == {
+        'red': 50
+    }
+    assert state['plate'] == {
+        'A1': {
+            'red': 150,
+            'green': 100,
+            'blue': 100
+        }
+    }
+
+
+def test_aspirate_multi(liquids):
+    state = tracker.aspirate(liquids, 90, 'p200', ('plate', 'A1'))
+
+    assert state['p200'] == {
+        'red': 30,
+        'green': 30,
+        'blue': 30
+    }
+    assert state['plate'] == {
+        'A1': {
+            'red': 70,
+            'green': 70,
+            'blue': 70
+        }
+    }
+
+
+def test_aspirate_unknown():
+    state = {
+        'p200': {
+            'red': 100
+        },
+        'plate': {
+            'A1': {
+                'red': 100
+            }
+        }
+    }
+    res = tracker.aspirate(state, 100, 'p200', ('plate', 'B1'))
+
+    assert res['p200'] == {
+        'red': 100,
+        'unknown-from-plate-B1': 100
+    }
+
+
+def test_concentrations(liquids):
+    res = tracker.concentrations(liquids)
+    expected = {
+        'trough': {
+            'A1': {
+                'red': 1.0
+            },
+            'A2': {
+                'green': 1.0
+            },
+            'A3': {
+                'blue': 1.0
+            }
+        },
+        'plate': {
+            'A1': {
+                'red': 0.3333333333333333,
+                'green': 0.3333333333333333,
+                'blue': 0.3333333333333333
+            }
+        }
+    }
+    assert res == expected
+
+
+def test_ensure_keys():
+    a = {}
+    res = tracker.ensure_keys(a, ['a', 'b'])
+
+    assert res == {
+        'a': {
+            'b': {}
+        }
+    }
