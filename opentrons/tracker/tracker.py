@@ -1,3 +1,19 @@
+from opentrons.util import trace
+
+
+def event(data):
+    pass
+
+
+trace.EventBroker.get_instance().add(event)
+
+
+def init(robot, state):
+    # subscribe to aspirate/dispense traceables
+    # set starting state
+    pass
+
+
 def ensure_keys(state, path):
     parent = state
     for p in path:

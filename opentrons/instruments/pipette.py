@@ -1,6 +1,7 @@
 import copy
 
 from opentrons import containers
+from opentrons.util import trace
 from opentrons.containers.calibrator import Calibrator
 from opentrons.containers.placeable import Placeable, humanize_location
 from opentrons.instruments.instrument import Instrument
@@ -344,6 +345,14 @@ class Pipette(Instrument):
 
             self._associate_placeable(location)
 
+            aspirate_event = {
+                'name': 'aspirate',
+                'volume': volume,
+                'location': location,
+                'pipette': self.name
+            }
+            trace.EventBroker.get_instance().notify(aspirate_event)
+
         def _do():
             nonlocal volume
             nonlocal location
@@ -455,6 +464,14 @@ class Pipette(Instrument):
             self.current_volume -= volume
 
             self._associate_placeable(location)
+
+            dispense_event = {
+                'name': 'dispense',
+                'volume': volume,
+                'location': location,
+                'pipette': self.name
+            }
+            trace.EventBroker.get_instance().notify(dispense_event)
 
         def _do():
             nonlocal location
