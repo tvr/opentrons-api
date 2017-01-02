@@ -39,21 +39,21 @@ def test_total_volume():
 
 def test_substract():
     state = {
-        'red': 100,
-        'green': 100,
-        'blue': 100
+        'red': 90,
+        'green': 60,
+        'blue': 30
     }
 
     new_state, volume = tracker.substract(state, 30)
     assert new_state == {
-        'red': 90,
-        'green': 90,
-        'blue': 90
+        'red': 75,
+        'green': 50,
+        'blue': 25
     }
     assert volume == {
-        'red': 10,
+        'red': 15,
         'green': 10,
-        'blue': 10
+        'blue': 5
     }
 
 
