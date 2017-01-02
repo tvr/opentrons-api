@@ -349,7 +349,7 @@ class Pipette(Instrument):
                 'name': 'aspirate',
                 'volume': volume,
                 'location': location,
-                'pipette': self.name
+                'pipette': self.axis
             }
             trace.EventBroker.get_instance().notify(aspirate_event)
 
@@ -469,7 +469,7 @@ class Pipette(Instrument):
                 'name': 'dispense',
                 'volume': volume,
                 'location': location,
-                'pipette': self.name
+                'pipette': self.axis
             }
             trace.EventBroker.get_instance().notify(dispense_event)
 

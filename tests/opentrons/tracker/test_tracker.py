@@ -182,3 +182,11 @@ def test_ensure_keys():
             'b': {}
         }
     }
+
+
+def test_event_traceable():
+    from opentrons import instruments, containers
+    plate = containers.load('96-flat', 'A1')
+    pipette = instruments.Pipette(axis='b', max_volume=200)
+    pipette.aspirate(100, plate[0])
+    pipette.dispense(plate[1])

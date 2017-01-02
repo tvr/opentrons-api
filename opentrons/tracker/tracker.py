@@ -1,17 +1,50 @@
+import copy
+
 from opentrons.util import trace
+from opentrons import containers
+
+
+_tracker_state = {}
+_tracker_init_state = {}
 
 
 def event(data):
-    pass
+    global _tracker_state
+    name = data.get('name')
+
+    if name is not 'aspirate' and name is not 'dispense':
+        return
+
+    location = data.get('location')
+    volume = data.get('volume')
+    pipette_axis = data.get('pipette')
+    placeable, _ = containers.unpack_location(location)
+    location = (placeable.get_parent().get_name(), placeable.get_name())
+    if name is 'aspirate':
+        _tracker_state = aspirate(
+            _tracker_state, volume, pipette_axis, location)
+    else:
+        _tracker_state = dispense(
+            _tracker_state, volume, pipette_axis, location)
 
 
 trace.EventBroker.get_instance().add(event)
 
 
-def init(robot, state):
-    # subscribe to aspirate/dispense traceables
-    # set starting state
-    pass
+def init(state):
+    global _tracker_init_state, _tracker_state
+    _tracker_init_state = copy.deepcopy(state)
+    reset()
+
+
+def reset():
+    global _tracker_init_state, _tracker_state
+    _tracker_state = copy.deepcopy(_tracker_init_state)
+
+
+def state():
+    global _tracker_state
+    return copy.deepcopy(_tracker_state)
 
 
 def ensure_keys(state, path):
@@ -20,7 +53,6 @@ def ensure_keys(state, path):
         if p not in parent:
             parent[p] = {}
         parent = parent[p]
-
     return state
 
 

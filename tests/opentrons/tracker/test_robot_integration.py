@@ -9,7 +9,7 @@ def get_robot():
 
     trough = containers.load('trough-12row', 'A1', 'trough')
     plate = containers.load('96-flat', 'A2', 'plate')
-    p200 = instruments.Pipette(axis='a', name='p200')
+    p200 = instruments.Pipette(axis='a', name='p200', max_volume=200)
 
     return robot, trough, plate, p200
 
@@ -17,7 +17,7 @@ def get_robot():
 def test_aspirate():
     robot, trough, plate, p200 = get_robot()
 
-    tracker.init(robot, {
+    tracker.init({
         'trough': {
             'A1': {
                 'red': 100
@@ -34,8 +34,6 @@ def test_aspirate():
     p200.aspirate(100, trough['A1']).dispense(100, plate['A1'])
     p200.aspirate(100, trough['A2']).dispense(100, plate['A1'])
     p200.aspirate(100, plate['A1']).dispense(100, plate['A2'])
-
-    robot.simulate()
 
     res = tracker.state()
 
