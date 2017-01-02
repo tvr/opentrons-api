@@ -77,8 +77,8 @@ def test_add():
     }
 
 
-def test_aspirate(liquids):
-    state = tracker.aspirate(liquids, 100, 'p200', ('trough', 'A1'))
+def test_aspirate():
+    state = tracker.aspirate(liquids(), 100, 'p200', ('trough', 'A1'))
 
     assert state['p200'] == {
         'red': 100
@@ -96,8 +96,8 @@ def test_aspirate(liquids):
     }
 
 
-def test_aspirate_dispense(liquids):
-    state = tracker.aspirate(liquids, 100, 'p200', ('trough', 'A1'))
+def test_aspirate_dispense():
+    state = tracker.aspirate(liquids(), 100, 'p200', ('trough', 'A1'))
     state = tracker.dispense(state, 50, 'p200', ('plate', 'A1'))
 
     assert state['p200'] == {
@@ -112,8 +112,8 @@ def test_aspirate_dispense(liquids):
     }
 
 
-def test_aspirate_multi(liquids):
-    state = tracker.aspirate(liquids, 90, 'p200', ('plate', 'A1'))
+def test_aspirate_multi():
+    state = tracker.aspirate(liquids(), 90, 'p200', ('plate', 'A1'))
 
     assert state['p200'] == {
         'red': 30,
@@ -148,8 +148,8 @@ def test_aspirate_unknown():
     }
 
 
-def test_concentrations(liquids):
-    res = tracker.concentrations(liquids)
+def test_concentrations():
+    res = tracker.concentrations(liquids())
     expected = {
         'trough': {
             'A1': {

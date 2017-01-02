@@ -3,19 +3,19 @@ from opentrons.tracker import tracker
 
 
 @pytest.fixture
-def robot():
+def get_robot():
     from opentrons import robot, instruments, containers
     robot.reset()
 
-    trough = containers.load('trough', 'A1', 'trough')
+    trough = containers.load('trough-12row', 'A1', 'trough')
     plate = containers.load('96-flat', 'A2', 'plate')
     p200 = instruments.Pipette(axis='a', name='p200')
 
     return robot, trough, plate, p200
 
 
-def test_aspirate(robot):
-    robot, trough, plate, p200 = robot
+def test_aspirate():
+    robot, trough, plate, p200 = get_robot()
 
     tracker.init(robot, {
         'trough': {
